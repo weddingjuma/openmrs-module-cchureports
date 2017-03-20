@@ -1,5 +1,6 @@
 package org.openmrs.module.cchureports.reporting;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,14 +9,17 @@ import java.util.Properties;
 
 import org.openmrs.Concept;
 import org.openmrs.EncounterType;
-import org.openmrs.Location;
+import org.openmrs.PersonAttributeType;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.cchureports.reporting.library.BasePatientDataLibrary;
+import org.openmrs.module.cchureports.reporting.library.DataFactory;
 import org.openmrs.module.cchureports.util.Cohorts;
-import org.openmrs.module.cchureports.util.GlobalPropertiesManagement;
+import org.openmrs.module.cchureports.util.MetadataLookup;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.data.converter.PropertyConverter;
 import org.openmrs.module.reporting.data.patient.definition.PatientIdDataDefinition;
+import org.openmrs.module.reporting.data.patient.library.BuiltInPatientDataLibrary;
 import org.openmrs.module.reporting.data.person.definition.PreferredNameDataDefinition;
 import org.openmrs.module.reporting.dataset.definition.PatientDataSetDefinition;
 import org.openmrs.module.reporting.evaluation.parameter.Mapped;
@@ -23,14 +27,30 @@ import org.openmrs.module.reporting.evaluation.parameter.Parameter;
 import org.openmrs.module.reporting.report.ReportDesign;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
 import org.openmrs.module.reporting.report.service.ReportService;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SetupFollowUpReport {
 	
-	GlobalPropertiesManagement gp = new GlobalPropertiesManagement();
+	//@Autowired
+	private BuiltInPatientDataLibrary builtInPatientData = new BuiltInPatientDataLibrary();
 	
-	Concept returnVisitDate = null;
+	//@Autowired
+	private BasePatientDataLibrary basePatientData = new BasePatientDataLibrary();
 	
-	List<EncounterType> asthmaEncounter;
+	private DataFactory df = new DataFactory();
+	
+	private PersonAttributeType careTaker1;
+	
+	private PersonAttributeType careTaker2;
+	
+	private PersonAttributeType phoneContact;
+	
+	private List<EncounterType> dischargeEncounterType = new ArrayList<EncounterType>();
+	
+	private Concept returnVisitDate = null;
+	
+	private Concept nextVisitSite = null;
 	
 	public void setup() throws Exception {
 		
@@ -77,6 +97,8 @@ public class SetupFollowUpReport {
 		
 		PatientDataSetDefinition dataSetDefinition = new PatientDataSetDefinition();
 		dataSetDefinition.setName("dataSet");
+		dataSetDefinition.addParameter(new Parameter("startDate", "Start Date", Date.class));
+		dataSetDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
 		
 		CohortDefinition rowFilter = Cohorts
 		        .getPatientsWhoseObsValueDateIsBetweenStartDateAndEndDateAtLocation(returnVisitDate);
@@ -92,9 +114,24 @@ public class SetupFollowUpReport {
 		        "givenName"));
 		dataSetDefinition.addColumn("familyName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class,
 		        "familyName"));
+		dataSetDefinition.addColumn("Current Age (yr)", basePatientData.getAgeAtEndInYears(), new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Current Age (mth)", basePatientData.getAgeAtEndInMonths(),
+		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("M/F", builtInPatientData.getGender(), new HashMap<String, Object>());
 		
-		dataSetDefinition.addParameter(new Parameter("startDate", "Start Date", Location.class));
-		dataSetDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
+		dataSetDefinition.addColumn("CareTaker1", basePatientData.getPersonAttribute(careTaker1),
+		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("CareTaker2", basePatientData.getPersonAttribute(careTaker2),
+		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Phone Contact", basePatientData.getPersonAttribute(phoneContact),
+		    new HashMap<String, Object>());
+		
+		dataSetDefinition.addColumn("Appointment Date", basePatientData.getAppointmentDatesDuringPeriod(),
+		    new HashMap<String, Object>());
+		
+		dataSetDefinition.addColumn("Appointment Site",
+		    df.getMostRecentObsByEndDate(nextVisitSite, dischargeEncounterType, df.getObsValueCodedConverter()),
+		    new HashMap<String, Object>());
 		
 		Map<String, Object> mappings = new HashMap<String, Object>();
 		mappings.put("startDate", "${startDate}");
@@ -104,7 +141,13 @@ public class SetupFollowUpReport {
 	}
 	
 	private void setupProperties() {
-		returnVisitDate = Context.getConceptService().getConcept(149);
+		returnVisitDate = MetadataLookup.getConcept("c38e5cc4-3f10-11e4-adec-0800271c1b75");
+		nextVisitSite = MetadataLookup.getConcept("2d2185b1-3b81-42db-a551-1a5315b0a98a");
+		careTaker1 = MetadataLookup.getPersonAttributeType("eca08628-b7f5-41f7-b50e-1409f8974fc0");
+		careTaker2 = MetadataLookup.getPersonAttributeType("5bb3308e-6372-415b-b5ca-9fe7238fd0b6");
+		phoneContact = MetadataLookup.getPersonAttributeType("e6e8fcb0-739c-496e-b295-b017f6f1fb84");
+		dischargeEncounterType.add(MetadataLookup.getEncounterType("81dd3390-3f10-11e4-adec-0800271c1b75"));
+		dischargeEncounterType.add(MetadataLookup.getEncounterType("81852aee-3f10-11e4-adec-0800271c1b75"));
 	}
 	
 }

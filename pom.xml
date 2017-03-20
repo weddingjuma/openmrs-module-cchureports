@@ -54,7 +54,7 @@
 
 	<properties>
 		<openmrsPlatformVersion>1.11.6</openmrsPlatformVersion>
-		<reportingVersion>0.11.1-SNAPSHOT</reportingVersion>
+		<reportingVersion>0.10.4</reportingVersion>
 	</properties>
 
 

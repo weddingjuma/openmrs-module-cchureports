@@ -114,6 +114,7 @@ $(document).ready(function(){
 	</tr>
 	
 	<tr>
+	    <td rowspan="1" class="tabletd">General Reports</td>
 		<td>Follow-up Report</td>
 		<td>Central</td>
 		<td><a
