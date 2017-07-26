@@ -18,7 +18,7 @@ import org.openmrs.module.cchureports.util.Cohorts;
 import org.openmrs.module.cchureports.util.MetadataLookup;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.data.converter.PropertyConverter;
-import org.openmrs.module.reporting.data.patient.definition.PatientIdDataDefinition;
+import org.openmrs.module.reporting.data.patient.definition.PatientIdentifierDataDefinition;
 import org.openmrs.module.reporting.data.patient.library.BuiltInPatientDataLibrary;
 import org.openmrs.module.reporting.data.person.definition.PreferredNameDataDefinition;
 import org.openmrs.module.reporting.dataset.definition.PatientDataSetDefinition;
@@ -107,7 +107,9 @@ public class SetupFollowUpReport {
 		dataSetDefinition.addParameter(new Parameter("startDate", "Start Date", Date.class));
 		dataSetDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
 		
-		dataSetDefinition.addColumn("IP", new PatientIdDataDefinition("Patient Identifier"), (String) null);
+		PatientIdentifierDataDefinition i = new PatientIdentifierDataDefinition();
+		i.addType(Context.getPatientService().getPatientIdentifierType(3));
+		dataSetDefinition.addColumn("IP", i, (String) null);
 		
 		PreferredNameDataDefinition d = new PreferredNameDataDefinition();
 		dataSetDefinition.addColumn("givenName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class,
