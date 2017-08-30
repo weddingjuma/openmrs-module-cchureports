@@ -52,6 +52,8 @@ public class SetupFollowUpReport {
 	
 	private Concept nextVisitSite = null;
 	
+	private PersonAttributeType registrationDiagnosis = null;
+	
 	public void setup() throws Exception {
 		
 		setupProperties();
@@ -121,6 +123,9 @@ public class SetupFollowUpReport {
 		    new HashMap<String, Object>());
 		dataSetDefinition.addColumn("M/F", builtInPatientData.getGender(), new HashMap<String, Object>());
 		
+		dataSetDefinition.addColumn("Registration Diagnosis", basePatientData.getPersonAttribute(registrationDiagnosis),
+		    new HashMap<String, Object>());
+		
 		dataSetDefinition.addColumn("CareTaker1", basePatientData.getPersonAttribute(careTaker1),
 		    new HashMap<String, Object>());
 		dataSetDefinition.addColumn("CareTaker2", basePatientData.getPersonAttribute(careTaker2),
@@ -145,6 +150,7 @@ public class SetupFollowUpReport {
 	private void setupProperties() {
 		returnVisitDate = MetadataLookup.getConcept("c38e5cc4-3f10-11e4-adec-0800271c1b75");
 		nextVisitSite = MetadataLookup.getConcept("2d2185b1-3b81-42db-a551-1a5315b0a98a");
+		registrationDiagnosis = MetadataLookup.getPersonAttributeType("537f22bb-8b4e-4d51-9f54-d3b315a1a2d2");
 		careTaker1 = MetadataLookup.getPersonAttributeType("eca08628-b7f5-41f7-b50e-1409f8974fc0");
 		careTaker2 = MetadataLookup.getPersonAttributeType("5bb3308e-6372-415b-b5ca-9fe7238fd0b6");
 		phoneContact = MetadataLookup.getPersonAttributeType("e6e8fcb0-739c-496e-b295-b017f6f1fb84");
