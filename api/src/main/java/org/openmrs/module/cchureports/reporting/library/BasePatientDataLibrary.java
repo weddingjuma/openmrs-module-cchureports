@@ -63,12 +63,12 @@ public class BasePatientDataLibrary extends BaseDefinitionLibrary<PatientDataDef
 	
 	@DocumentedDefinition("traditionalAuthority")
 	public PatientDataDefinition getTraditionalAuthority() {
-		return df.getPreferredAddress("countyDistrict");
+		return df.getPreferredAddress("stateProvince");
 	}
 	
 	@DocumentedDefinition("district")
 	public PatientDataDefinition getDistrict() {
-		return df.getPreferredAddress("stateProvince");
+		return df.getPreferredAddress("countyDistrict");
 	}
 	
 	@DocumentedDefinition("addressFull")

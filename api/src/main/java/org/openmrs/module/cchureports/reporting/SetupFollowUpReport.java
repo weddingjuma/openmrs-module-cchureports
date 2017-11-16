@@ -126,6 +126,7 @@ public class SetupFollowUpReport {
 		dataSetDefinition.addColumn("Registration Diagnosis", basePatientData.getPersonAttribute(registrationDiagnosis),
 		    new HashMap<String, Object>());
 		
+		dataSetDefinition.addColumn("District", basePatientData.getDistrict(), new HashMap<String, Object>());
 		dataSetDefinition.addColumn("CareTaker1", basePatientData.getPersonAttribute(careTaker1),
 		    new HashMap<String, Object>());
 		dataSetDefinition.addColumn("CareTaker2", basePatientData.getPersonAttribute(careTaker2),
