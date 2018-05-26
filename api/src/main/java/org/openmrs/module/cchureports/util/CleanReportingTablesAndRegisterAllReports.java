@@ -16,6 +16,7 @@ package org.openmrs.module.cchureports.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
 import org.openmrs.module.cchureports.reporting.SetupORLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupPlasticSurgeryLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupSummaryValuesReport;
@@ -63,6 +64,7 @@ public class CleanReportingTablesAndRegisterAllReports {
 		new SetupORLogBookReport().setup();
 		new SetupPlasticSurgeryLogBookReport().setup();
 		new SetupSummaryValuesReport().setup();
+		new SetupLateVisitandLTFUReport().setup();
 	}
 	
 }

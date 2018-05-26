@@ -50,6 +50,7 @@ import org.openmrs.module.reporting.cohort.definition.ProgramEnrollmentCohortDef
 import org.openmrs.module.reporting.common.BooleanOperator;
 import org.openmrs.module.reporting.common.ObjectUtil;
 import org.openmrs.module.reporting.common.RangeComparator;
+import org.openmrs.module.reporting.common.ScriptingLanguage;
 import org.openmrs.module.reporting.common.SetComparator;
 import org.openmrs.module.reporting.common.TimeQualifier;
 import org.openmrs.module.reporting.data.ConvertedDataDefinition;
@@ -72,11 +73,13 @@ import org.openmrs.module.reporting.data.patient.definition.EncountersForPatient
 import org.openmrs.module.reporting.data.patient.definition.PatientDataDefinition;
 import org.openmrs.module.reporting.data.patient.definition.PatientIdentifierDataDefinition;
 import org.openmrs.module.reporting.data.patient.definition.PersonToPatientDataDefinition;
+import org.openmrs.module.reporting.data.patient.definition.ScriptedCompositionPatientDataDefinition;
 import org.openmrs.module.reporting.data.person.definition.ObsForPersonDataDefinition;
 import org.openmrs.module.reporting.data.person.definition.PersonDataDefinition;
 import org.openmrs.module.reporting.data.person.definition.PreferredAddressDataDefinition;
 import org.openmrs.module.reporting.data.person.definition.RelationshipsForPersonDataDefinition;
 import org.openmrs.module.reporting.dataset.DataSetRow;
+import org.openmrs.module.reporting.evaluation.parameter.Mapped;
 import org.openmrs.module.reporting.evaluation.parameter.Parameter;
 import org.openmrs.module.reporting.evaluation.parameter.ParameterizableUtil;
 import org.openmrs.module.reporting.query.encounter.definition.BasicEncounterQuery;
@@ -767,6 +770,26 @@ public class DataFactory {
 		CompositionEncounterQuery cd = new CompositionEncounterQuery();
 		cd.initializeFromElements(elements);
 		return cd;
+	}
+	
+	//Obs queries
+	
+	public ScriptedCompositionPatientDataDefinition getDifferenceSinceLastObservation(String name, Concept concept) {
+		
+		ObsForPersonDataDefinition lastFollowupDate = new ObsForPersonDataDefinition();
+		lastFollowupDate.setName(name);
+		lastFollowupDate.setWhich(TimeQualifier.LAST);
+		lastFollowupDate.setQuestion(concept);
+		
+		String script = "import groovy.time.*; return (TimeCategory.minus(evaluationContext.getParameterValue(\"endDate\"), lastFollowupDate.valueDate)).toString();";
+		
+		ScriptedCompositionPatientDataDefinition daysSinceLastVisit = new ScriptedCompositionPatientDataDefinition();
+		daysSinceLastVisit.setScriptType(new ScriptingLanguage("groovy"));
+		daysSinceLastVisit.setScriptCode(script);
+		daysSinceLastVisit.getContainedDataDefinitions().put("lastFollowupDate",
+		    new Mapped<PatientDataDefinition>(new PersonToPatientDataDefinition(lastFollowupDate), null));
+		
+		return daysSinceLastVisit;
 	}
 	
 	// Converters

@@ -67,6 +67,15 @@ public class Cohorts {
 		return convert(cd, ObjectUtil.toMap("value1=startDate,value2=endDate"));
 	}
 	
+	public static CohortDefinition getPatientsWhoseObsValueDateIsBeforeEndDateAtLocation(Concept dateConcept) {
+		DateObsCohortDefinition cd = new DateObsCohortDefinition();
+		cd.setTimeModifier(TimeModifier.ANY);
+		cd.setQuestion(dateConcept);
+		cd.setOperator1(RangeComparator.LESS_EQUAL);
+		cd.addParameter(new Parameter("value1", "value1", Date.class));
+		return convert(cd, ObjectUtil.toMap("value2=endDate"));
+	}
+	
 	// Convenience methods
 	
 	public static PatientDataDefinition convert(PatientDataDefinition pdd, Map<String, String> renamedParameters,

@@ -3,6 +3,7 @@ package org.openmrs.module.cchureports.web.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.cchureports.reporting.SetupFollowUpReport;
+import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
 import org.openmrs.module.cchureports.reporting.SetupORLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupPlasticSurgeryLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupSummaryValuesReport;
@@ -69,4 +70,15 @@ public class CCHUSetupReportsFormController {
 		return new ModelAndView(new RedirectView("cchureports.form"));
 	}
 	
+	@RequestMapping("/module/cchureports/register_lateVisitandLTFUReport")
+	public ModelAndView registerlateVisitandLTFUReport() throws Exception {
+		new SetupLateVisitandLTFUReport().setup();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/remove_lateVisitandLTFUReport")
+	public ModelAndView removelateVisitandLTFUReport() throws Exception {
+		new SetupLateVisitandLTFUReport().delete();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
 }
