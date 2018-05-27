@@ -1,9 +1,9 @@
-${moduleName}
+CCHU Reports
 ==========================
 
 Description
 -----------
-This is a very basic module which can be used as a starting point in creating a new module.
+Reporting Module for CURE Children's Hospital of Uganda
 
 Building from Source
 --------------------
