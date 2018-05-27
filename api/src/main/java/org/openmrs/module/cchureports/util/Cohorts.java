@@ -34,8 +34,7 @@ public class Cohorts {
 	public Log log = LogFactory.getLog(getClass());
 	
 	public static SqlCohortDefinition createPatientsNotVoided() {
-		SqlCohortDefinition patientsNotVoided = new SqlCohortDefinition(
-		        "select distinct p.patient_id from patient p where p.voided=0");
+		SqlCohortDefinition patientsNotVoided = new SqlCohortDefinition("select distinct p.patient_id from patient p where p.voided=0");
 		return patientsNotVoided;
 	}
 	
@@ -69,17 +68,16 @@ public class Cohorts {
 	
 	public static CohortDefinition getPatientsWhoseObsValueDateIsBeforeEndDateAtLocation(Concept dateConcept) {
 		DateObsCohortDefinition cd = new DateObsCohortDefinition();
-		cd.setTimeModifier(TimeModifier.ANY);
+		cd.setTimeModifier(TimeModifier.LAST);
 		cd.setQuestion(dateConcept);
 		cd.setOperator1(RangeComparator.LESS_EQUAL);
 		cd.addParameter(new Parameter("value1", "value1", Date.class));
-		return convert(cd, ObjectUtil.toMap("value2=endDate"));
+		return convert(cd, ObjectUtil.toMap("value1=endDate"));
 	}
 	
 	// Convenience methods
 	
-	public static PatientDataDefinition convert(PatientDataDefinition pdd, Map<String, String> renamedParameters,
-	        DataConverter converter) {
+	public static PatientDataDefinition convert(PatientDataDefinition pdd, Map<String, String> renamedParameters, DataConverter converter) {
 		ConvertedPatientDataDefinition convertedDefinition = new ConvertedPatientDataDefinition();
 		addAndConvertMappings(pdd, convertedDefinition, renamedParameters, converter);
 		return convertedDefinition;
@@ -89,8 +87,7 @@ public class Cohorts {
 		return convert(pdd, null, converter);
 	}
 	
-	public static PatientDataDefinition convert(PersonDataDefinition pdd, Map<String, String> renamedParameters,
-	        DataConverter converter) {
+	public static PatientDataDefinition convert(PersonDataDefinition pdd, Map<String, String> renamedParameters, DataConverter converter) {
 		return convert(new PersonToPatientDataDefinition(pdd), renamedParameters, converter);
 	}
 	
@@ -98,8 +95,7 @@ public class Cohorts {
 		return convert(pdd, null, converter);
 	}
 	
-	public static EncounterDataDefinition convert(EncounterDataDefinition pdd, Map<String, String> renamedParameters,
-	        DataConverter converter) {
+	public static EncounterDataDefinition convert(EncounterDataDefinition pdd, Map<String, String> renamedParameters, DataConverter converter) {
 		ConvertedEncounterDataDefinition convertedDefinition = new ConvertedEncounterDataDefinition();
 		addAndConvertMappings(pdd, convertedDefinition, renamedParameters, converter);
 		return convertedDefinition;
@@ -117,8 +113,7 @@ public class Cohorts {
 		return new MappedParametersCohortDefinition(cd, renamedParameters);
 	}
 	
-	protected static <T extends DataDefinition> void addAndConvertMappings(T copyFrom, ConvertedDataDefinition<T> copyTo,
-	        Map<String, String> renamedParameters, DataConverter converter) {
+	protected static <T extends DataDefinition> void addAndConvertMappings(T copyFrom, ConvertedDataDefinition<T> copyTo, Map<String, String> renamedParameters, DataConverter converter) {
 		copyTo.setDefinitionToConvert(ParameterizableUtil.copyAndMap(copyFrom, copyTo, renamedParameters));
 		if (converter != null) {
 			copyTo.setConverters(Arrays.asList(converter));

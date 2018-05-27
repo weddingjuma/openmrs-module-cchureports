@@ -756,7 +756,7 @@ public class DataFactory {
 		lastFollowupDate.setWhich(TimeQualifier.LAST);
 		lastFollowupDate.setQuestion(concept);
 		
-		String script = "import groovy.time.*; return (TimeCategory.minus(evaluationContext.getParameterValue(\"endDate\"), lastFollowupDate.valueDate)).toString();";
+		String script = "import groovy.time.*; return (TimeCategory.minus(evaluationContext.getParameterValue(\"endDate\"), lastFollowupDate.valueDate)).getDays()";
 		
 		ScriptedCompositionPatientDataDefinition daysSinceLastVisit = new ScriptedCompositionPatientDataDefinition();
 		daysSinceLastVisit.setScriptType(new ScriptingLanguage("groovy"));

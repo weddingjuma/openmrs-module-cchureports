@@ -86,7 +86,6 @@ public class SetupLateVisitandLTFUReport {
 		
 		ReportDefinition reportDefinition = new ReportDefinition();
 		reportDefinition.setName("Late Visit and Lost to Follow Up Report");
-		
 		reportDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
 		createDataSetDefinition(reportDefinition);
 		
@@ -97,18 +96,19 @@ public class SetupLateVisitandLTFUReport {
 	
 	private void createDataSetDefinition(ReportDefinition reportDefinition) {
 		
+		//Create the only dataset for our report
 		PatientDataSetDefinition dataSetDefinition = new PatientDataSetDefinition();
 		dataSetDefinition.setName("dataSet");
 		dataSetDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
 		
-		SortCriteria sortCriteria = new SortCriteria();
-		sortCriteria.addSortElement("Days since last Followup Date", SortDirection.DESC);
-		dataSetDefinition.setSortCriteria(sortCriteria);
-		
+		//Add a filter to the dataset to only query patients whose last next followup date is before endDate parameter
 		CohortDefinition rowFilter = Cohorts.getPatientsWhoseObsValueDateIsBeforeEndDateAtLocation(returnVisitDate);
 		dataSetDefinition.addRowFilter(Mapped.mapStraightThrough(rowFilter));
 		
-		dataSetDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
+		//Sort the dataset rows by the "Days since last followup Date" column -Descending
+		SortCriteria sortCriteria = new SortCriteria();
+		sortCriteria.addSortElement("Days since last Followup Date", SortDirection.DESC);
+		dataSetDefinition.setSortCriteria(sortCriteria);
 		
 		PatientIdentifierDataDefinition i = new PatientIdentifierDataDefinition();
 		i.addType(Context.getPatientService().getPatientIdentifierType(3));
