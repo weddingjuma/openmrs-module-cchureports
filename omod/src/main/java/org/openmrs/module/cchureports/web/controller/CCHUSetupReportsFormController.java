@@ -7,6 +7,7 @@ import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
 import org.openmrs.module.cchureports.reporting.SetupORLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupPlasticSurgeryLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupSummaryValuesReport;
+import org.openmrs.module.cchureports.reporting.SetupSurgicalProceduresIndicatorReport;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -71,14 +72,26 @@ public class CCHUSetupReportsFormController {
 	}
 	
 	@RequestMapping("/module/cchureports/register_lateVisitandLTFUReport")
-	public ModelAndView registerlateVisitandLTFUReport() throws Exception {
+	public ModelAndView registerLateVisitandLTFUReport() throws Exception {
 		new SetupLateVisitandLTFUReport().setup();
 		return new ModelAndView(new RedirectView("cchureports.form"));
 	}
 	
 	@RequestMapping("/module/cchureports/remove_lateVisitandLTFUReport")
-	public ModelAndView removelateVisitandLTFUReport() throws Exception {
+	public ModelAndView removeLateVisitandLTFUReport() throws Exception {
 		new SetupLateVisitandLTFUReport().delete();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/register_surgicalProceduresReport")
+	public ModelAndView registerSurgicalProceduresReport() throws Exception {
+		new SetupSurgicalProceduresIndicatorReport().setup();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/remove_surgicalProceduresReport")
+	public ModelAndView removeSurgicalProceduresReport() throws Exception {
+		new SetupSurgicalProceduresIndicatorReport().delete();
 		return new ModelAndView(new RedirectView("cchureports.form"));
 	}
 }

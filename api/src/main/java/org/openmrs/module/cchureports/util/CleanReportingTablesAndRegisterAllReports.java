@@ -20,6 +20,7 @@ import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
 import org.openmrs.module.cchureports.reporting.SetupORLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupPlasticSurgeryLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupSummaryValuesReport;
+import org.openmrs.module.cchureports.reporting.SetupSurgicalProceduresIndicatorReport;
 import org.openmrs.module.reporting.report.ReportDesign;
 import org.openmrs.module.reporting.report.ReportRequest;
 import org.openmrs.module.reporting.report.ReportRequest.Status;
@@ -65,6 +66,7 @@ public class CleanReportingTablesAndRegisterAllReports {
 		new SetupPlasticSurgeryLogBookReport().setup();
 		new SetupSummaryValuesReport().setup();
 		new SetupLateVisitandLTFUReport().setup();
+		new SetupSurgicalProceduresIndicatorReport();
 	}
 	
 }
