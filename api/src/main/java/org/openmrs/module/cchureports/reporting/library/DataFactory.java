@@ -154,7 +154,8 @@ public class DataFactory {
 		return getMostRecentEncounterOfTypesByEndDate(Arrays.asList(type), converter);
 	}
 	
-	public PatientDataDefinition getFirstObsByEndDate(Concept question, List<EncounterType> encounterTypes, DataConverter converter) {
+	public PatientDataDefinition getFirstObsByEndDate(Concept question, List<EncounterType> encounterTypes,
+	        DataConverter converter) {
 		ObsForPersonDataDefinition def = new ObsForPersonDataDefinition();
 		def.setWhich(TimeQualifier.FIRST);
 		def.setQuestion(question);
@@ -167,7 +168,8 @@ public class DataFactory {
 		return getMostRecentObsByEndDate(question, null, null);
 	}
 	
-	public PatientDataDefinition getMostRecentObsByEndDate(Concept question, List<EncounterType> encounterTypes, DataConverter converter) {
+	public PatientDataDefinition getMostRecentObsByEndDate(Concept question, List<EncounterType> encounterTypes,
+	        DataConverter converter) {
 		ObsForPersonDataDefinition def = new ObsForPersonDataDefinition();
 		def.setWhich(TimeQualifier.LAST);
 		def.setQuestion(question);
@@ -176,7 +178,8 @@ public class DataFactory {
 		return convert(def, ObjectUtil.toMap("onOrBefore=endDate"), converter);
 	}
 	
-	public PatientDataDefinition getMostRecentObsAtLocationByEndDate(Concept question, List<EncounterType> encounterTypes, DataConverter converter) {
+	public PatientDataDefinition getMostRecentObsAtLocationByEndDate(Concept question, List<EncounterType> encounterTypes,
+	        DataConverter converter) {
 		ObsForPersonDataDefinition def = new ObsForPersonDataDefinition();
 		def.setWhich(TimeQualifier.LAST);
 		def.setQuestion(question);
@@ -186,7 +189,8 @@ public class DataFactory {
 		return convert(def, ObjectUtil.toMap("onOrBefore=endDate,locationList=location"), converter);
 	}
 	
-	public PatientDataDefinition getAllObsByEndDate(Concept question, List<EncounterType> encounterTypes, DataConverter converter) {
+	public PatientDataDefinition getAllObsByEndDate(Concept question, List<EncounterType> encounterTypes,
+	        DataConverter converter) {
 		ObsForPersonDataDefinition def = new ObsForPersonDataDefinition();
 		def.setQuestion(question);
 		def.setEncounterTypeList(encounterTypes);
@@ -194,7 +198,8 @@ public class DataFactory {
 		return convert(def, ObjectUtil.toMap("onOrBefore=endDate"), converter);
 	}
 	
-	public PatientDataDefinition getCodedObsPresentByEndDate(Concept question, Concept answer, List<EncounterType> encounterTypes) {
+	public PatientDataDefinition getCodedObsPresentByEndDate(Concept question, Concept answer,
+	        List<EncounterType> encounterTypes) {
 		ObsForPersonDataDefinition def = new ObsForPersonDataDefinition();
 		def.setQuestion(question);
 		def.setEncounterTypeList(encounterTypes);
@@ -202,14 +207,17 @@ public class DataFactory {
 		return convert(def, ObjectUtil.toMap("onOrBefore=endDate"), getObsValueCodedPresentConverter(answer));
 	}
 	
-	public PatientDataDefinition getObsWhoseValueDatetimeIsDuringPeriodAtLocation(Concept question, List<EncounterType> encounterTypes, DataConverter converter) {
+	public PatientDataDefinition getObsWhoseValueDatetimeIsDuringPeriodAtLocation(Concept question,
+	        List<EncounterType> encounterTypes, DataConverter converter) {
 		ObsForPersonDataDefinition def = new ObsForPersonDataDefinition();
 		def.setQuestion(question);
 		def.setEncounterTypeList(encounterTypes);
 		def.addParameter(new Parameter("valueDatetimeOrAfter", "Value On Or After", Date.class));
 		def.addParameter(new Parameter("valueDatetimeOnOrBefore", "Value On Or Before", Date.class));
 		def.addParameter(new Parameter("locationList", "Locations", Location.class));
-		return convert(def, ObjectUtil.toMap("valueDatetimeOrAfter=startDate,valueDatetimeOnOrBefore=endDate,locationList=location"), converter);
+		return convert(def,
+		    ObjectUtil.toMap("valueDatetimeOrAfter=startDate,valueDatetimeOnOrBefore=endDate,locationList=location"),
+		    converter);
 	}
 	
 	public PatientDataDefinition getObsWhoseValueDatetimeIsDuringPeriod(Concept question, DataConverter converter) {
@@ -292,7 +300,8 @@ public class DataFactory {
 		BirthAndDeathCohortDefinition cd = new BirthAndDeathCohortDefinition();
 		cd.addParameter(new Parameter("bornOnOrAfter", "Born On Or After", Date.class));
 		cd.addParameter(new Parameter("bornOnOrBefore", "Born On Or Before", Date.class));
-		return convert(cd, ObjectUtil.toMap("bornOnOrAfter=startDate-" + numWeeks + "w,bornOnOrBefore=endDate-" + numWeeks + "w"));
+		return convert(cd,
+		    ObjectUtil.toMap("bornOnOrAfter=startDate-" + numWeeks + "w,bornOnOrBefore=endDate-" + numWeeks + "w"));
 	}
 	
 	public CohortDefinition getPatientsWhoDiedByEndDate(ProgramWorkflowState diedState) {
@@ -473,7 +482,8 @@ public class DataFactory {
 		cd.addParameter(new Parameter("onOrAfter", "On or After", Date.class));
 		cd.addParameter(new Parameter("onOrBefore", "On or Before", Date.class));
 		cd.addParameter(new Parameter("locationList", "Locations", Location.class));
-		return convert(cd, ObjectUtil.toMap("onOrAfter=endDate-" + numMonths + "m+1d,onOrBefore=endDate,locationList=location"));
+		return convert(cd,
+		    ObjectUtil.toMap("onOrAfter=endDate-" + numMonths + "m+1d,onOrBefore=endDate,locationList=location"));
 	}
 	
 	public CohortDefinition getPatientsWithAnyObsDuringPeriod(Concept question, List<EncounterType> restrictToTypes) {
@@ -505,7 +515,8 @@ public class DataFactory {
 		return convert(cd, ObjectUtil.toMap("onOrAfter=startDate,onOrBefore=endDate,locationList=location"));
 	}
 	
-	public CohortDefinition getPatientsWithNumericObsAtLocationDuringPeriod(Concept question, List<EncounterType> restrictToTypes, RangeComparator operator, Double value) {
+	public CohortDefinition getPatientsWithNumericObsAtLocationDuringPeriod(Concept question,
+	        List<EncounterType> restrictToTypes, RangeComparator operator, Double value) {
 		NumericObsCohortDefinition cd = new NumericObsCohortDefinition();
 		cd.setTimeModifier(TimeModifier.ANY);
 		cd.setQuestion(question);
@@ -518,7 +529,8 @@ public class DataFactory {
 		return convert(cd, ObjectUtil.toMap("onOrAfter=startDate,onOrBefore=endDate,locationList=location"));
 	}
 	
-	public CohortDefinition getPatientsWithNumericObsAtLocationByEnd(Concept question, List<EncounterType> restrictToTypes, RangeComparator operator, Double value) {
+	public CohortDefinition getPatientsWithNumericObsAtLocationByEnd(Concept question, List<EncounterType> restrictToTypes,
+	        RangeComparator operator, Double value) {
 		NumericObsCohortDefinition cd = new NumericObsCohortDefinition();
 		cd.setTimeModifier(TimeModifier.ANY);
 		cd.setQuestion(question);
@@ -530,7 +542,8 @@ public class DataFactory {
 		return convert(cd, ObjectUtil.toMap("onOrBefore=endDate,locationList=location"));
 	}
 	
-	public CohortDefinition getPatientsWithMostRecentNumericObsAtLocationByEnd(Concept question, List<EncounterType> restrictToTypes, RangeComparator operator, Double value) {
+	public CohortDefinition getPatientsWithMostRecentNumericObsAtLocationByEnd(Concept question,
+	        List<EncounterType> restrictToTypes, RangeComparator operator, Double value) {
 		NumericObsCohortDefinition cd = new NumericObsCohortDefinition();
 		cd.setTimeModifier(TimeModifier.LAST);
 		cd.setQuestion(question);
@@ -582,11 +595,13 @@ public class DataFactory {
 		return convert(cd, ObjectUtil.toMap("onOrBefore=endDate"));
 	}
 	
-	public CohortDefinition getPatientsWhoseMostRecentObsDateIsOlderThanValueAtLocationByEndDate(Concept dateConcept, List<EncounterType> types, String olderThan) {
+	public CohortDefinition getPatientsWhoseMostRecentObsDateIsOlderThanValueAtLocationByEndDate(Concept dateConcept,
+	        List<EncounterType> types, String olderThan) {
 		return getPatientsWhoseMostRecentObsDateIsBetweenValuesAtLocationByEndDate(dateConcept, types, olderThan, null);
 	}
 	
-	public CohortDefinition getPatientsWhoseMostRecentCodedObsInValuesAtLocationByEndDate(Concept question, List<EncounterType> types, Concept... values) {
+	public CohortDefinition getPatientsWhoseMostRecentCodedObsInValuesAtLocationByEndDate(Concept question,
+	        List<EncounterType> types, Concept... values) {
 		CodedObsCohortDefinition cd = new CodedObsCohortDefinition();
 		cd.setTimeModifier(TimeModifier.MAX);
 		cd.setQuestion(question);
@@ -598,7 +613,8 @@ public class DataFactory {
 		return convert(cd, ObjectUtil.toMap("locationList=location,onOrBefore=endDate"));
 	}
 	
-	public CohortDefinition getPatientsWhoseObsValueDateIsBetweenStartDateAndEndDateAtLocation(Concept dateConcept, List<EncounterType> types) {
+	public CohortDefinition getPatientsWhoseObsValueDateIsBetweenStartDateAndEndDateAtLocation(Concept dateConcept,
+	        List<EncounterType> types) {
 		DateObsCohortDefinition cd = new DateObsCohortDefinition();
 		cd.setTimeModifier(TimeModifier.ANY);
 		cd.setQuestion(dateConcept);
@@ -611,7 +627,8 @@ public class DataFactory {
 		return convert(cd, ObjectUtil.toMap("locationList=location,value1=startDate,value2=endDate"));
 	}
 	
-	public CohortDefinition getPatientsWhoseMostRecentObsDateIsBetweenValuesAtLocationByEndDate(Concept dateConcept, List<EncounterType> types, String olderThan, String onOrPriorTo) {
+	public CohortDefinition getPatientsWhoseMostRecentObsDateIsBetweenValuesAtLocationByEndDate(Concept dateConcept,
+	        List<EncounterType> types, String olderThan, String onOrPriorTo) {
 		DateObsCohortDefinition cd = new DateObsCohortDefinition();
 		cd.setTimeModifier(TimeModifier.MAX);
 		cd.setQuestion(dateConcept);
@@ -632,7 +649,8 @@ public class DataFactory {
 		return convert(cd, params);
 	}
 	
-	public CohortDefinition getPatientsWhoseMostRecentObsDateIsBetweenValuesByEndDate(Concept dateConcept, List<EncounterType> types, String olderThan, String onOrPriorTo) {
+	public CohortDefinition getPatientsWhoseMostRecentObsDateIsBetweenValuesByEndDate(Concept dateConcept,
+	        List<EncounterType> types, String olderThan, String onOrPriorTo) {
 		DateObsCohortDefinition cd = new DateObsCohortDefinition();
 		cd.setTimeModifier(TimeModifier.MAX);
 		cd.setQuestion(dateConcept);
@@ -686,7 +704,8 @@ public class DataFactory {
 		q.addParameter(new Parameter("onOrAfter", "On or after", Date.class));
 		q.addParameter(new Parameter("onOrBefore", "On or before", Date.class));
 		q.addParameter(new Parameter("locationList", "Locations", Location.class));
-		return new MappedParametersEncounterQuery(q, ObjectUtil.toMap("onOrAfter=startDate,onOrBefore=endDate,locationList=location"));
+		return new MappedParametersEncounterQuery(q,
+		        ObjectUtil.toMap("onOrAfter=startDate,onOrBefore=endDate,locationList=location"));
 	}
 	
 	public EncounterQuery getEncountersOfTypeByEndDate(List<EncounterType> encounterTypes) {
@@ -696,17 +715,20 @@ public class DataFactory {
 		return convert(q, ObjectUtil.toMap("onOrBefore=endDate"));
 	}
 	
-	public EncounterQuery getEncountersWithObsRecordedAtLocationDuringPeriod(Concept question, List<EncounterType> encounterTypes) {
+	public EncounterQuery getEncountersWithObsRecordedAtLocationDuringPeriod(Concept question,
+	        List<EncounterType> encounterTypes) {
 		ObsForEncounterQuery q = new ObsForEncounterQuery();
 		q.setQuestion(question);
 		q.setEncounterTypes(encounterTypes);
 		q.addParameter(new Parameter("encounterOnOrAfter", "On or after", Date.class));
 		q.addParameter(new Parameter("encounterOnOrBefore", "On or before", Date.class));
 		q.addParameter(new Parameter("encounterLocations", "Locations", Location.class));
-		return convert(q, ObjectUtil.toMap("encounterOnOrAfter=startDate,encounterOnOrBefore=endDate,encounterLocations=location"));
+		return convert(q,
+		    ObjectUtil.toMap("encounterOnOrAfter=startDate,encounterOnOrBefore=endDate,encounterLocations=location"));
 	}
 	
-	public EncounterQuery getEncountersWithNumericObsValuesRecordedAtLocationDuringPeriod(Concept question, List<EncounterType> encounterTypes, RangeComparator operator, Double value) {
+	public EncounterQuery getEncountersWithNumericObsValuesRecordedAtLocationDuringPeriod(Concept question,
+	        List<EncounterType> encounterTypes, RangeComparator operator, Double value) {
 		NumericObsForEncounterQuery q = new NumericObsForEncounterQuery();
 		q.setQuestion(question);
 		q.setEncounterTypes(encounterTypes);
@@ -715,10 +737,12 @@ public class DataFactory {
 		q.addParameter(new Parameter("encounterOnOrAfter", "On or after", Date.class));
 		q.addParameter(new Parameter("encounterOnOrBefore", "On or before", Date.class));
 		q.addParameter(new Parameter("encounterLocations", "Locations", Location.class));
-		return convert(q, ObjectUtil.toMap("encounterOnOrAfter=startDate,encounterOnOrBefore=endDate,encounterLocations=location"));
+		return convert(q,
+		    ObjectUtil.toMap("encounterOnOrAfter=startDate,encounterOnOrBefore=endDate,encounterLocations=location"));
 	}
 	
-	public EncounterQuery getEncountersWithCodedObsValuesRecordedAtLocationDuringPeriod(Concept question, List<EncounterType> encounterTypes, Concept... valuesToInclude) {
+	public EncounterQuery getEncountersWithCodedObsValuesRecordedAtLocationDuringPeriod(Concept question,
+	        List<EncounterType> encounterTypes, Concept... valuesToInclude) {
 		CodedObsForEncounterQuery q = new CodedObsForEncounterQuery();
 		q.setQuestion(question);
 		q.setEncounterTypes(encounterTypes);
@@ -726,7 +750,8 @@ public class DataFactory {
 		q.addParameter(new Parameter("encounterOnOrAfter", "On or after", Date.class));
 		q.addParameter(new Parameter("encounterOnOrBefore", "On or before", Date.class));
 		q.addParameter(new Parameter("encounterLocations", "Locations", Location.class));
-		return convert(q, ObjectUtil.toMap("encounterOnOrAfter=startDate,encounterOnOrBefore=endDate,encounterLocations=location"));
+		return convert(q,
+		    ObjectUtil.toMap("encounterOnOrAfter=startDate,encounterOnOrBefore=endDate,encounterLocations=location"));
 	}
 	
 	public CompositionEncounterQuery getEncountersInAll(EncounterQuery... elements) {
@@ -761,7 +786,8 @@ public class DataFactory {
 		ScriptedCompositionPatientDataDefinition daysSinceLastVisit = new ScriptedCompositionPatientDataDefinition();
 		daysSinceLastVisit.setScriptType(new ScriptingLanguage("groovy"));
 		daysSinceLastVisit.setScriptCode(script);
-		daysSinceLastVisit.getContainedDataDefinitions().put("lastFollowupDate", new Mapped<PatientDataDefinition>(new PersonToPatientDataDefinition(lastFollowupDate), null));
+		daysSinceLastVisit.getContainedDataDefinitions().put("lastFollowupDate",
+		    new Mapped<PatientDataDefinition>(new PersonToPatientDataDefinition(lastFollowupDate), null));
 		
 		return daysSinceLastVisit;
 	}
@@ -827,7 +853,8 @@ public class DataFactory {
 	}
 	
 	public DataConverter getStateLocationConverter() {
-		return new ChainedConverter(new PropertyConverter(PatientState.class, "patientProgram.location"), new ObjectFormatter());
+		return new ChainedConverter(new PropertyConverter(PatientState.class, "patientProgram.location"),
+		        new ObjectFormatter());
 	}
 	
 	public DataConverter getStateProgramEnrollmentDateConverter() {
@@ -896,7 +923,8 @@ public class DataFactory {
 	
 	// Convenience methods
 	
-	public PatientDataDefinition convert(PatientDataDefinition pdd, Map<String, String> renamedParameters, DataConverter converter) {
+	public PatientDataDefinition convert(PatientDataDefinition pdd, Map<String, String> renamedParameters,
+	        DataConverter converter) {
 		ConvertedPatientDataDefinition convertedDefinition = new ConvertedPatientDataDefinition();
 		addAndConvertMappings(pdd, convertedDefinition, renamedParameters, converter);
 		return convertedDefinition;
@@ -906,7 +934,8 @@ public class DataFactory {
 		return convert(pdd, null, converter);
 	}
 	
-	public PatientDataDefinition convert(PersonDataDefinition pdd, Map<String, String> renamedParameters, DataConverter converter) {
+	public PatientDataDefinition convert(PersonDataDefinition pdd, Map<String, String> renamedParameters,
+	        DataConverter converter) {
 		return convert(new PersonToPatientDataDefinition(pdd), renamedParameters, converter);
 	}
 	
@@ -914,7 +943,8 @@ public class DataFactory {
 		return convert(pdd, null, converter);
 	}
 	
-	public EncounterDataDefinition convert(EncounterDataDefinition pdd, Map<String, String> renamedParameters, DataConverter converter) {
+	public EncounterDataDefinition convert(EncounterDataDefinition pdd, Map<String, String> renamedParameters,
+	        DataConverter converter) {
 		ConvertedEncounterDataDefinition convertedDefinition = new ConvertedEncounterDataDefinition();
 		addAndConvertMappings(pdd, convertedDefinition, renamedParameters, converter);
 		return convertedDefinition;
@@ -932,7 +962,8 @@ public class DataFactory {
 		return new MappedParametersCohortDefinition(cd, renamedParameters);
 	}
 	
-	protected <T extends DataDefinition> void addAndConvertMappings(T copyFrom, ConvertedDataDefinition<T> copyTo, Map<String, String> renamedParameters, DataConverter converter) {
+	protected <T extends DataDefinition> void addAndConvertMappings(T copyFrom, ConvertedDataDefinition<T> copyTo,
+	        Map<String, String> renamedParameters, DataConverter converter) {
 		copyTo.setDefinitionToConvert(ParameterizableUtil.copyAndMap(copyFrom, copyTo, renamedParameters));
 		if (converter != null) {
 			copyTo.setConverters(Arrays.asList(converter));

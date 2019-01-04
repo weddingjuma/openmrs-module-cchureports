@@ -338,7 +338,8 @@ public class SetupSurgicalProceduresIndicatorReport {
 		reportDefinition.addParameter(new Parameter("startDate", "Start Date", Date.class));
 		reportDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
 		
-		reportDefinition.addDataSetDefinition(createObsDataSet(), ParameterizableUtil.createParameterMappings("startDate=${startDate},endDate=${endDate}"));
+		reportDefinition.addDataSetDefinition(createObsDataSet(),
+		    ParameterizableUtil.createParameterMappings("startDate=${startDate},endDate=${endDate}"));
 		
 		CodedObsCohortDefinition patientsWithSurgicalProcedureObservation = new CodedObsCohortDefinition();
 		patientsWithSurgicalProcedureObservation.setTimeModifier(TimeModifier.ANY);
@@ -346,11 +347,13 @@ public class SetupSurgicalProceduresIndicatorReport {
 		patientsWithSurgicalProcedureObservation.addParameter(new Parameter("onOrAfter", "On or After", Date.class));
 		patientsWithSurgicalProcedureObservation.addParameter(new Parameter("onOrBefore", "On or Before", Date.class));
 		
-		reportDefinition.setBaseCohortDefinition(patientsWithSurgicalProcedureObservation, ParameterizableUtil.createParameterMappings("onOrAfter=${startDate},onOrBefore=${endDate}"));
+		reportDefinition.setBaseCohortDefinition(patientsWithSurgicalProcedureObservation,
+		    ParameterizableUtil.createParameterMappings("onOrAfter=${startDate},onOrBefore=${endDate}"));
 		
 		Helper.saveReportDefinition(reportDefinition);
 		
-		ReportDesign monthlyDesign = Helper.createRowPerPatientXlsOverviewReportDesign(reportDefinition, "Surgical_Procedures_Indicator_Report.xls", "Surgical Procedures Indicator Report", null);
+		ReportDesign monthlyDesign = Helper.createRowPerPatientXlsOverviewReportDesign(reportDefinition,
+		    "Surgical_Procedures_Indicator_Report.xls", "Surgical Procedures Indicator Report", null);
 		Properties monthlyProps = new Properties();
 		monthlyProps.put("repeatingSections", "sheet:1,dataset:Obs Data Set");
 		monthlyProps.put("sortWeight", "5000");
@@ -384,157 +387,725 @@ public class SetupSurgicalProceduresIndicatorReport {
 	
 	private void createIndicators(SimpleIndicatorDataSetDefinition dsd) {
 		
-		dsd.addColumn("1", "Total # of " + ASPIRATION_IRRIGATION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ASPIRATION_IRRIGATION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("2", "Total # of " + BONE_SHAVING.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(BONE_SHAVING), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("3", "Total # of " + BURR_HOLE_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(BURR_HOLE_RESERVOIR_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("4", "Total # of " + BURR_HOLE_S.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(BURR_HOLE_S), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("5", "Total # of " + CHEST_TUBE_DRAINAGE_PLEURAL_EFFUSION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CHEST_TUBE_DRAINAGE_PLEURAL_EFFUSION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("6", "Total # of " + CIRCUMCISION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CIRCUMCISION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("7", "Total # of " + CLEFT_LIP_AND_PALATE_REPAIR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CLEFT_LIP_AND_PALATE_REPAIR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("8", "Total # of " + CLEFT_LIP_REPAIR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CLEFT_LIP_REPAIR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("9", "Total # of " + CLEFT_PALATE_REPAIR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CLEFT_PALATE_REPAIR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("10", "Total # of " + CPC.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CPC), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("11", "Total # of " + CPC_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CPC_RESERVOIR_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("12", "Total # of " + CPC_VPS.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CPC_VPS), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("13", "Total # of " + CRANIECTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIECTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("14", "Total # of " + CRANIOFACIAL_RECONSTRUCTION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOFACIAL_RECONSTRUCTION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("15", "Total # of " + CRANIOPLASTY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOPLASTY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("16", "Total # of " + CRANIOTOMY_ANEURYSM.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_ANEURYSM), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("17", "Total # of " + CRANIOTOMY_DEPRESSED_SKULL_FRACTURE.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_DEPRESSED_SKULL_FRACTURE), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("18", "Total # of " + CRANIOTOMY_ECR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_ECR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("19", "Total # of " + CRANIOTOMY_EDH.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_EDH), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("20", "Total # of " + CRANIOTOMY_EPILEPSY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_EPILEPSY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("21", "Total # of " + CRANIOTOMY_GROWING_FRACTURE.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_GROWING_FRACTURE), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("22", "Total # of " + CRANIOTOMY_OTHER.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_OTHER), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("23", "Total # of " + CRANIOTOMY_SDH.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_SDH), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("24", "Total # of " + CRANIOTOMY_ACF_REPAIR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_ACF_REPAIR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("25", "Total # of " + CRANIOTOMY_HAEMATOMA.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_HAEMATOMA), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("26", "Total # of " + CRANIOTOMY_SUBDURAL_EMPYEMA.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_SUBDURAL_EMPYEMA), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("27", "Total # of " + CRANIOTOMY_TUMOR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_TUMOR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("28", "Total # of " + CSF_LEAK_REPAIR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CSF_LEAK_REPAIR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("29", "Total # of " + CYSTO_PERITONEAL_SHUNT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(CYSTO_PERITONEAL_SHUNT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("30", "Total # of " + DEBRID_CLOSURE.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(DEBRID_CLOSURE), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("31", "Total # of " + DEBRIDEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(DEBRIDEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("32", "Total # of " + DECOMPRESSIVE_HEMICRANIECTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(DECOMPRESSIVE_HEMICRANIECTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("33", "Total # of " + DISARTICULATION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(DISARTICULATION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("34", "Total # of " + DISKECTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(DISKECTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("35", "Total # of " + DURA_EXPANSION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(DURA_EXPANSION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("36", "Total # of " + DURAPLASTY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(DURAPLASTY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("37", "Total # of " + EC_REPAIR_OCCIPITAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EC_REPAIR_OCCIPITAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("38", "Total # of " + EC_VERTEX.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EC_VERTEX), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("39", "Total # of " + ECR_FRONTAL_NASAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ECR_FRONTAL_NASAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("40", "Total # of " + ECR_FRONTAL_TEMPORAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ECR_FRONTAL_TEMPORAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("41", "Total # of " + ECR_OCCIPITAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ECR_OCCIPITAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("42", "Total # of " + ECR_PARIETAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ECR_PARIETAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("43", "Total # of " + ENCEPHALOCELE_EXCISION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ENCEPHALOCELE_EXCISION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("44", "Total # of " + ENDOSCOPIC_TRANS_SPHENOIDAL_SURGERY_ETSS.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ENDOSCOPIC_TRANS_SPHENOIDAL_SURGERY_ETSS), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("45", "Total # of " + ETV.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("46", "Total # of " + ETV_PLUS_BIOPSY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_PLUS_BIOPSY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("47", "Total # of " + ETV_REDO.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_REDO), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("48", "Total # of " + ETV_REDO_VPS_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_REDO_VPS_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("49", "Total # of " + ETV_AQUEDUCTOPLASTY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_AQUEDUCTOPLASTY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("50", "Total # of " + ETV_CPC.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_CPC), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("51", "Total # of " + ETV_CPC_REDO.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_CPC_REDO), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("52", "Total # of " + ETV_CPC_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_CPC_RESERVOIR_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("53", "Total # of " + ETV_CPC_VPS_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_CPC_VPS_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("54", "Total # of " + ETV_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_RESERVOIR_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("55", "Total # of " + ETV_RESERVOIR_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_RESERVOIR_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("56", "Total # of " + ETV_SEPTOSTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_SEPTOSTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("57", "Total # of " + ETV_VPS_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_VPS_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("58", "Total # of " + ETV_VPS_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ETV_VPS_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("59", "Total # of " + EUA_BIOPSY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EUA_BIOPSY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("60", "Total # of " + EVD_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EVD_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("61", "Total # of " + EXCISION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EXCISION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("62", "Total # of " + EXCISION_SCALP_MASS.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SCALP_MASS), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("63", "Total # of " + EXCISION_SINUS_TRACT_SPINAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SINUS_TRACT_SPINAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("64", "Total # of " + EXCISION_SINUS_TRACT_CERVICAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SINUS_TRACT_CERVICAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("65", "Total # of " + EXCISION_SKULL_MASS.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SKULL_MASS), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("66", "Total # of " + EXCISION_SPINAL_MASS.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SPINAL_MASS), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("67", "Total # of " + EXCISIONAL_BIOPSY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EXCISIONAL_BIOPSY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("68", "Total # of " + EXPLORATION_SCALP_MASS.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EXPLORATION_SCALP_MASS), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("69", "Total # of " + EXTERNAL_DRAINAGE_SYSTEM.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(EXTERNAL_DRAINAGE_SYSTEM), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("70", "Total # of " + HERNIOTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(HERNIOTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("71", "Total # of " + ICP_MEASUREMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ICP_MEASUREMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("72", "Total # of " + IMPLANT_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(IMPLANT_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("73", "Total # of " + INCISION_AND_DRAINAGE.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(INCISION_AND_DRAINAGE), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("74", "Total # of " + INCISIONAL_BIOPSY_SCALP_MASS.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(INCISIONAL_BIOPSY_SCALP_MASS), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("75", "Total # of " + INCISIONAL_BIOPSY_TUMOR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(INCISIONAL_BIOPSY_TUMOR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("76", "Total # of " + INTERBODY_FUSSION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(INTERBODY_FUSSION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("77", "Total # of " + LAMINECTOMIES_SBO.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_SBO), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("78", "Total # of " + LAMINECTOMIES_CERVICAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_CERVICAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("79", "Total # of " + LAMINECTOMIES_CHIARI_DECOMPRESSION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_CHIARI_DECOMPRESSION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("80", "Total # of " + LAMINECTOMIES_LUMBAR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_LUMBAR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("81", "Total # of " + LAMINECTOMIES_SACRAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_SACRAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("82", "Total # of " + LAMINECTOMIES_THORACIC.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_THORACIC), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("83", "Total # of " + LAMINECTOMIES_THORACO_LUMBAR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_THORACO_LUMBAR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("84", "Total # of " + LAMINECTOMIES_TUMOR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_TUMOR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("85", "Total # of " + LAMINECTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("86", "Total # of " + LAMINECTOMY_PLUS_FUSSION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMY_PLUS_FUSSION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("87", "Total # of " + LAMINOTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LAMINOTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("88", "Total # of " + LUMBOPERITONEAL_SHUNT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LUMBOPERITONEAL_SHUNT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("89", "Total # of " + LYMPHNODE_BIOPSY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(LYMPHNODE_BIOPSY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("90", "Total # of " + MENINGOCELE_REPAIR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(MENINGOCELE_REPAIR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("91", "Total # of " + MM_CLOSURE.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(MM_CLOSURE), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("92", "Total # of " + MMC_CLOSURE.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(MMC_CLOSURE), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("93", "Total # of " + MMC_KYPHECTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(MMC_KYPHECTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("94", "Total # of " + PDR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(PDR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("95", "Total # of " + RE_DO_CRANIOTOMY_TUMOR_RESECTION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(RE_DO_CRANIOTOMY_TUMOR_RESECTION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("96", "Total # of " + RESERVOIR_SUBDURAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_SUBDURAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("97", "Total # of " + RESERVOIR_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("98", "Total # of " + RESERVOIR_PLACEMENT_VPS_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_PLACEMENT_VPS_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("99", "Total # of " + RESERVOIR_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("100", "Total # of " + RESERVOIR_REMOVAL_REPLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_REMOVAL_REPLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("101", "Total # of " + RESERVOIR_REVISION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_REVISION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("102", "Total # of " + ROD_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(ROD_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("103", "Total # of " + SD_P_SHUNT_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("104", "Total # of " + SD_P_SHUNT_REMOVAL_ETV.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_REMOVAL_ETV), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("105", "Total # of " + SD_P_SHUNT_REMOVAL_ETV_CPC.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_REMOVAL_ETV_CPC), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("106", "Total # of " + SD_P_SHUNT_REMOVAL_VPS_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_REMOVAL_VPS_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("107", "Total # of " + SD_P_SHUNT_REVISION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_REVISION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("108", "Total # of " + SEPARATION_OF_CO_JOINT_TWINS.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SEPARATION_OF_CO_JOINT_TWINS), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("109", "Total # of " + SKIN_GRAFT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SKIN_GRAFT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("110", "Total # of " + SPINAL_CORD_UNTETHERING_MM.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SPINAL_CORD_UNTETHERING_MM), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("111", "Total # of " + SPINAL_CORD_UNTETHERING_SBO.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SPINAL_CORD_UNTETHERING_SBO), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("112", "Total # of " + SPINAL_FUSION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SPINAL_FUSION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("113", "Total # of " + SPINE_STABILISATION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SPINE_STABILISATION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("114", "Total # of " + SUTURE_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(SUTURE_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("115", "Total # of " + TARSORRHAPHY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(TARSORRHAPHY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("116", "Total # of " + TRACHEOSTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(TRACHEOSTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("117", "Total # of " + TUMOR_BIOPSY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(TUMOR_BIOPSY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("118", "Total # of " + VENTRICULO_ATRIAL_SHUNT_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULO_ATRIAL_SHUNT_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("119", "Total # of " + VENTRICULO_PLEURAL_SHUNT_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULO_PLEURAL_SHUNT_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("120", "Total # of " + VENTRICULOSCOPY_AQUEDUCTOPLASTY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_AQUEDUCTOPLASTY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("121", "Total # of " + VENTRICULOSCOPY_CYST.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_CYST), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("122", "Total # of " + VENTRICULOSCOPY_FENESTRATION_OF_MEMBRANES.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_FENESTRATION_OF_MEMBRANES), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("123", "Total # of " + VENTRICULOSCOPY_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_RESERVOIR_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("124", "Total # of " + VENTRICULOSCOPY_SEPTOSTOMY.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_SEPTOSTOMY), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("125", "Total # of " + VENTRICULOSCOPY_TUMOR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_TUMOR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("126", "Total # of " + VENTRICULOSCOPY_VENT_CATH_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_VENT_CATH_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("127", "Total # of " + VENTRICULOSCOPY_VPS_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_VPS_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("128", "Total # of " + VENTRICULOSCOPY_VPS_REVISION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_VPS_REVISION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("129", "Total # of " + VPS_EXTERNALIZATION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_EXTERNALIZATION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("130", "Total # of " + VPS_INTERNALIZATION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_INTERNALIZATION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("131", "Total # of " + VPS_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("132", "Total # of " + VPS_PLACEMENT_RESERVOIR_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_PLACEMENT_RESERVOIR_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("133", "Total # of " + VPS_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("134", "Total # of " + VPS_REMOVAL_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_REMOVAL_RESERVOIR_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("135", "Total # of " + VPS_REPLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_REPLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("136", "Total # of " + VPS_REPLACEMENT_RESERVOIR_REMOVAL.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_REPLACEMENT_RESERVOIR_REMOVAL), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("137", "Total # of " + VPS_REVISION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_REVISION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("138", "Total # of " + VPS_TIE_OFF.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VPS_TIE_OFF), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("139", "Total # of " + VSSS_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VSSS_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("140", "Total # of " + VSSS_REMOVAL_VPS_PLACEMENT.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VSSS_REMOVAL_VPS_PLACEMENT), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("141", "Total # of " + VSSS_REVISION.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(VSSS_REVISION), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("142", "Total # of " + WOUND_CLOSURE.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(WOUND_CLOSURE), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("143", "Total # of " + WOUND_REVISION_MM.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(WOUND_REVISION_MM), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
-		dsd.addColumn("144", "Total # of " + WOUND_REVISION_OTHER.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(addIndicator(WOUND_REVISION_OTHER), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "1",
+		    "Total # of " + ASPIRATION_IRRIGATION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ASPIRATION_IRRIGATION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "2",
+		    "Total # of " + BONE_SHAVING.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(BONE_SHAVING), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "3",
+		    "Total # of " + BURR_HOLE_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(BURR_HOLE_RESERVOIR_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "4",
+		    "Total # of " + BURR_HOLE_S.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(BURR_HOLE_S), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "5",
+		    "Total # of " + CHEST_TUBE_DRAINAGE_PLEURAL_EFFUSION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CHEST_TUBE_DRAINAGE_PLEURAL_EFFUSION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "6",
+		    "Total # of " + CIRCUMCISION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CIRCUMCISION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "7",
+		    "Total # of " + CLEFT_LIP_AND_PALATE_REPAIR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CLEFT_LIP_AND_PALATE_REPAIR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "8",
+		    "Total # of " + CLEFT_LIP_REPAIR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CLEFT_LIP_REPAIR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "9",
+		    "Total # of " + CLEFT_PALATE_REPAIR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CLEFT_PALATE_REPAIR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn("10", "Total # of " + CPC.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(
+		        addIndicator(CPC), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "11",
+		    "Total # of " + CPC_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CPC_RESERVOIR_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "12",
+		    "Total # of " + CPC_VPS.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CPC_VPS), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "13",
+		    "Total # of " + CRANIECTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIECTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "14",
+		    "Total # of " + CRANIOFACIAL_RECONSTRUCTION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOFACIAL_RECONSTRUCTION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "15",
+		    "Total # of " + CRANIOPLASTY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOPLASTY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "16",
+		    "Total # of " + CRANIOTOMY_ANEURYSM.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_ANEURYSM), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "17",
+		    "Total # of " + CRANIOTOMY_DEPRESSED_SKULL_FRACTURE.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_DEPRESSED_SKULL_FRACTURE), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "18",
+		    "Total # of " + CRANIOTOMY_ECR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_ECR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "19",
+		    "Total # of " + CRANIOTOMY_EDH.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_EDH), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "20",
+		    "Total # of " + CRANIOTOMY_EPILEPSY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_EPILEPSY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "21",
+		    "Total # of " + CRANIOTOMY_GROWING_FRACTURE.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_GROWING_FRACTURE), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "22",
+		    "Total # of " + CRANIOTOMY_OTHER.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_OTHER), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "23",
+		    "Total # of " + CRANIOTOMY_SDH.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_SDH), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "24",
+		    "Total # of " + CRANIOTOMY_ACF_REPAIR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_ACF_REPAIR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "25",
+		    "Total # of " + CRANIOTOMY_HAEMATOMA.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_HAEMATOMA), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "26",
+		    "Total # of " + CRANIOTOMY_SUBDURAL_EMPYEMA.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_SUBDURAL_EMPYEMA), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "27",
+		    "Total # of " + CRANIOTOMY_TUMOR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CRANIOTOMY_TUMOR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "28",
+		    "Total # of " + CSF_LEAK_REPAIR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CSF_LEAK_REPAIR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "29",
+		    "Total # of " + CYSTO_PERITONEAL_SHUNT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(CYSTO_PERITONEAL_SHUNT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "30",
+		    "Total # of " + DEBRID_CLOSURE.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(DEBRID_CLOSURE), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "31",
+		    "Total # of " + DEBRIDEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(DEBRIDEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "32",
+		    "Total # of " + DECOMPRESSIVE_HEMICRANIECTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(DECOMPRESSIVE_HEMICRANIECTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "33",
+		    "Total # of " + DISARTICULATION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(DISARTICULATION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "34",
+		    "Total # of " + DISKECTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(DISKECTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "35",
+		    "Total # of " + DURA_EXPANSION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(DURA_EXPANSION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "36",
+		    "Total # of " + DURAPLASTY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(DURAPLASTY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "37",
+		    "Total # of " + EC_REPAIR_OCCIPITAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EC_REPAIR_OCCIPITAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "38",
+		    "Total # of " + EC_VERTEX.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EC_VERTEX), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "39",
+		    "Total # of " + ECR_FRONTAL_NASAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ECR_FRONTAL_NASAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "40",
+		    "Total # of " + ECR_FRONTAL_TEMPORAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ECR_FRONTAL_TEMPORAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "41",
+		    "Total # of " + ECR_OCCIPITAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ECR_OCCIPITAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "42",
+		    "Total # of " + ECR_PARIETAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ECR_PARIETAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "43",
+		    "Total # of " + ENCEPHALOCELE_EXCISION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ENCEPHALOCELE_EXCISION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "44",
+		    "Total # of " + ENDOSCOPIC_TRANS_SPHENOIDAL_SURGERY_ETSS.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ENDOSCOPIC_TRANS_SPHENOIDAL_SURGERY_ETSS), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn("45", "Total # of " + ETV.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(
+		        addIndicator(ETV), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "46",
+		    "Total # of " + ETV_PLUS_BIOPSY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_PLUS_BIOPSY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "47",
+		    "Total # of " + ETV_REDO.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_REDO), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "48",
+		    "Total # of " + ETV_REDO_VPS_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_REDO_VPS_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "49",
+		    "Total # of " + ETV_AQUEDUCTOPLASTY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_AQUEDUCTOPLASTY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "50",
+		    "Total # of " + ETV_CPC.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_CPC), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "51",
+		    "Total # of " + ETV_CPC_REDO.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_CPC_REDO), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "52",
+		    "Total # of " + ETV_CPC_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_CPC_RESERVOIR_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "53",
+		    "Total # of " + ETV_CPC_VPS_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_CPC_VPS_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "54",
+		    "Total # of " + ETV_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_RESERVOIR_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "55",
+		    "Total # of " + ETV_RESERVOIR_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_RESERVOIR_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "56",
+		    "Total # of " + ETV_SEPTOSTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_SEPTOSTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "57",
+		    "Total # of " + ETV_VPS_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_VPS_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "58",
+		    "Total # of " + ETV_VPS_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ETV_VPS_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "59",
+		    "Total # of " + EUA_BIOPSY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EUA_BIOPSY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "60",
+		    "Total # of " + EVD_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EVD_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "61",
+		    "Total # of " + EXCISION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EXCISION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "62",
+		    "Total # of " + EXCISION_SCALP_MASS.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SCALP_MASS), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "63",
+		    "Total # of " + EXCISION_SINUS_TRACT_SPINAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SINUS_TRACT_SPINAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "64",
+		    "Total # of " + EXCISION_SINUS_TRACT_CERVICAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SINUS_TRACT_CERVICAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "65",
+		    "Total # of " + EXCISION_SKULL_MASS.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SKULL_MASS), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "66",
+		    "Total # of " + EXCISION_SPINAL_MASS.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EXCISION_SPINAL_MASS), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "67",
+		    "Total # of " + EXCISIONAL_BIOPSY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EXCISIONAL_BIOPSY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "68",
+		    "Total # of " + EXPLORATION_SCALP_MASS.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EXPLORATION_SCALP_MASS), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "69",
+		    "Total # of " + EXTERNAL_DRAINAGE_SYSTEM.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(EXTERNAL_DRAINAGE_SYSTEM), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "70",
+		    "Total # of " + HERNIOTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(HERNIOTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "71",
+		    "Total # of " + ICP_MEASUREMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ICP_MEASUREMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "72",
+		    "Total # of " + IMPLANT_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(IMPLANT_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "73",
+		    "Total # of " + INCISION_AND_DRAINAGE.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(INCISION_AND_DRAINAGE), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "74",
+		    "Total # of " + INCISIONAL_BIOPSY_SCALP_MASS.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(INCISIONAL_BIOPSY_SCALP_MASS), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "75",
+		    "Total # of " + INCISIONAL_BIOPSY_TUMOR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(INCISIONAL_BIOPSY_TUMOR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "76",
+		    "Total # of " + INTERBODY_FUSSION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(INTERBODY_FUSSION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "77",
+		    "Total # of " + LAMINECTOMIES_SBO.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_SBO), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "78",
+		    "Total # of " + LAMINECTOMIES_CERVICAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_CERVICAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "79",
+		    "Total # of " + LAMINECTOMIES_CHIARI_DECOMPRESSION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_CHIARI_DECOMPRESSION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "80",
+		    "Total # of " + LAMINECTOMIES_LUMBAR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_LUMBAR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "81",
+		    "Total # of " + LAMINECTOMIES_SACRAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_SACRAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "82",
+		    "Total # of " + LAMINECTOMIES_THORACIC.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_THORACIC), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "83",
+		    "Total # of " + LAMINECTOMIES_THORACO_LUMBAR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_THORACO_LUMBAR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "84",
+		    "Total # of " + LAMINECTOMIES_TUMOR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMIES_TUMOR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "85",
+		    "Total # of " + LAMINECTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "86",
+		    "Total # of " + LAMINECTOMY_PLUS_FUSSION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINECTOMY_PLUS_FUSSION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "87",
+		    "Total # of " + LAMINOTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LAMINOTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "88",
+		    "Total # of " + LUMBOPERITONEAL_SHUNT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LUMBOPERITONEAL_SHUNT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "89",
+		    "Total # of " + LYMPHNODE_BIOPSY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(LYMPHNODE_BIOPSY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "90",
+		    "Total # of " + MENINGOCELE_REPAIR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(MENINGOCELE_REPAIR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "91",
+		    "Total # of " + MM_CLOSURE.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(MM_CLOSURE), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "92",
+		    "Total # of " + MMC_CLOSURE.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(MMC_CLOSURE), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "93",
+		    "Total # of " + MMC_KYPHECTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(MMC_KYPHECTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn("94", "Total # of " + PDR.getDisplayString() + " Procedures", new Mapped<QueryCountIndicator>(
+		        addIndicator(PDR), ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "95",
+		    "Total # of " + RE_DO_CRANIOTOMY_TUMOR_RESECTION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(RE_DO_CRANIOTOMY_TUMOR_RESECTION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "96",
+		    "Total # of " + RESERVOIR_SUBDURAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_SUBDURAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "97",
+		    "Total # of " + RESERVOIR_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "98",
+		    "Total # of " + RESERVOIR_PLACEMENT_VPS_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_PLACEMENT_VPS_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "99",
+		    "Total # of " + RESERVOIR_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "100",
+		    "Total # of " + RESERVOIR_REMOVAL_REPLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_REMOVAL_REPLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "101",
+		    "Total # of " + RESERVOIR_REVISION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(RESERVOIR_REVISION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "102",
+		    "Total # of " + ROD_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(ROD_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "103",
+		    "Total # of " + SD_P_SHUNT_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "104",
+		    "Total # of " + SD_P_SHUNT_REMOVAL_ETV.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_REMOVAL_ETV), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "105",
+		    "Total # of " + SD_P_SHUNT_REMOVAL_ETV_CPC.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_REMOVAL_ETV_CPC), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "106",
+		    "Total # of " + SD_P_SHUNT_REMOVAL_VPS_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_REMOVAL_VPS_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "107",
+		    "Total # of " + SD_P_SHUNT_REVISION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SD_P_SHUNT_REVISION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "108",
+		    "Total # of " + SEPARATION_OF_CO_JOINT_TWINS.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SEPARATION_OF_CO_JOINT_TWINS), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "109",
+		    "Total # of " + SKIN_GRAFT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SKIN_GRAFT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "110",
+		    "Total # of " + SPINAL_CORD_UNTETHERING_MM.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SPINAL_CORD_UNTETHERING_MM), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "111",
+		    "Total # of " + SPINAL_CORD_UNTETHERING_SBO.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SPINAL_CORD_UNTETHERING_SBO), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "112",
+		    "Total # of " + SPINAL_FUSION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SPINAL_FUSION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "113",
+		    "Total # of " + SPINE_STABILISATION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SPINE_STABILISATION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "114",
+		    "Total # of " + SUTURE_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(SUTURE_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "115",
+		    "Total # of " + TARSORRHAPHY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(TARSORRHAPHY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "116",
+		    "Total # of " + TRACHEOSTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(TRACHEOSTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "117",
+		    "Total # of " + TUMOR_BIOPSY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(TUMOR_BIOPSY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "118",
+		    "Total # of " + VENTRICULO_ATRIAL_SHUNT_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULO_ATRIAL_SHUNT_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "119",
+		    "Total # of " + VENTRICULO_PLEURAL_SHUNT_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULO_PLEURAL_SHUNT_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "120",
+		    "Total # of " + VENTRICULOSCOPY_AQUEDUCTOPLASTY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_AQUEDUCTOPLASTY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "121",
+		    "Total # of " + VENTRICULOSCOPY_CYST.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_CYST), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "122",
+		    "Total # of " + VENTRICULOSCOPY_FENESTRATION_OF_MEMBRANES.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_FENESTRATION_OF_MEMBRANES), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "123",
+		    "Total # of " + VENTRICULOSCOPY_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_RESERVOIR_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "124",
+		    "Total # of " + VENTRICULOSCOPY_SEPTOSTOMY.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_SEPTOSTOMY), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "125",
+		    "Total # of " + VENTRICULOSCOPY_TUMOR.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_TUMOR), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "126",
+		    "Total # of " + VENTRICULOSCOPY_VENT_CATH_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_VENT_CATH_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "127",
+		    "Total # of " + VENTRICULOSCOPY_VPS_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_VPS_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "128",
+		    "Total # of " + VENTRICULOSCOPY_VPS_REVISION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VENTRICULOSCOPY_VPS_REVISION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "129",
+		    "Total # of " + VPS_EXTERNALIZATION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_EXTERNALIZATION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "130",
+		    "Total # of " + VPS_INTERNALIZATION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_INTERNALIZATION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "131",
+		    "Total # of " + VPS_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "132",
+		    "Total # of " + VPS_PLACEMENT_RESERVOIR_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_PLACEMENT_RESERVOIR_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "133",
+		    "Total # of " + VPS_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "134",
+		    "Total # of " + VPS_REMOVAL_RESERVOIR_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_REMOVAL_RESERVOIR_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "135",
+		    "Total # of " + VPS_REPLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_REPLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "136",
+		    "Total # of " + VPS_REPLACEMENT_RESERVOIR_REMOVAL.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_REPLACEMENT_RESERVOIR_REMOVAL), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "137",
+		    "Total # of " + VPS_REVISION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_REVISION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "138",
+		    "Total # of " + VPS_TIE_OFF.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VPS_TIE_OFF), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "139",
+		    "Total # of " + VSSS_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VSSS_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "140",
+		    "Total # of " + VSSS_REMOVAL_VPS_PLACEMENT.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VSSS_REMOVAL_VPS_PLACEMENT), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "141",
+		    "Total # of " + VSSS_REVISION.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(VSSS_REVISION), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "142",
+		    "Total # of " + WOUND_CLOSURE.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(WOUND_CLOSURE), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "143",
+		    "Total # of " + WOUND_REVISION_MM.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(WOUND_REVISION_MM), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		dsd.addColumn(
+		    "144",
+		    "Total # of " + WOUND_REVISION_OTHER.getDisplayString() + " Procedures",
+		    new Mapped<QueryCountIndicator>(addIndicator(WOUND_REVISION_OTHER), ParameterizableUtil
+		            .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
 		
 	}
 	
 	private QueryCountIndicator addIndicator(Concept concept) {
 		
 		SqlObsQuery etvcpcObs = new SqlObsQuery();
-		etvcpcObs.setQuery("select obs_id from obs where value_coded =" + concept.getConceptId() + " and obs_datetime>= :startDate and obs_datetime<= :endDate and voided=0");
+		etvcpcObs.setQuery("select obs_id from obs where value_coded =" + concept.getConceptId()
+		        + " and obs_datetime>= :startDate and obs_datetime<= :endDate and voided=0");
 		etvcpcObs.setName("etvcpcObs" + concept.getDisplayString());
 		etvcpcObs.addParameter(new Parameter("startDate", "startDate", Date.class));
 		etvcpcObs.addParameter(new Parameter("endDate", "endDate", Date.class));
@@ -542,7 +1113,8 @@ public class SetupSurgicalProceduresIndicatorReport {
 		QueryCountIndicator ci = new QueryCountIndicator();
 		ci.addParameter(new Parameter("startDate", "Start date", Date.class));
 		ci.addParameter(new Parameter("endDate", "End date", Date.class));
-		ci.setQuery(new Mapped<SqlObsQuery>(etvcpcObs, ParameterizableUtil.createParameterMappings("endDate=${endDate},startDate=${startDate}")));
+		ci.setQuery(new Mapped<SqlObsQuery>(etvcpcObs, ParameterizableUtil
+		        .createParameterMappings("endDate=${endDate},startDate=${startDate}")));
 		
 		return ci;
 	};

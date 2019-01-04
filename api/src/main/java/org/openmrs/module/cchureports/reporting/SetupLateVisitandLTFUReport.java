@@ -62,7 +62,8 @@ public class SetupLateVisitandLTFUReport {
 		
 		ReportDefinition rd = createReportDefinition();
 		
-		ReportDesign design = Helper.createRowPerPatientXlsOverviewReportDesign(rd, "lateVisitandLTFUReport.xls", "lateVisitandLTFUReport.xls_", null);
+		ReportDesign design = Helper.createRowPerPatientXlsOverviewReportDesign(rd, "lateVisitandLTFUReport.xls",
+		    "lateVisitandLTFUReport.xls_", null);
 		
 		Properties props = new Properties();
 		props.put("repeatingSections", "sheet:1,row:9,dataset:dataSet");
@@ -115,27 +116,38 @@ public class SetupLateVisitandLTFUReport {
 		dataSetDefinition.addColumn("IP", i, (String) null);
 		
 		PreferredNameDataDefinition d = new PreferredNameDataDefinition();
-		dataSetDefinition.addColumn("givenName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class, "givenName"));
-		dataSetDefinition.addColumn("familyName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class, "familyName"));
+		dataSetDefinition.addColumn("givenName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class,
+		        "givenName"));
+		dataSetDefinition.addColumn("familyName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class,
+		        "familyName"));
 		dataSetDefinition.addColumn("Current Age (yr)", basePatientData.getAgeAtEndInYears(), new HashMap<String, Object>());
-		dataSetDefinition.addColumn("Current Age (mth)", basePatientData.getAgeAtEndInMonths(), new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Current Age (mth)", basePatientData.getAgeAtEndInMonths(),
+		    new HashMap<String, Object>());
 		dataSetDefinition.addColumn("M/F", builtInPatientData.getGender(), new HashMap<String, Object>());
 		
-		dataSetDefinition.addColumn("Registration Diagnosis", basePatientData.getPersonAttribute(registrationDiagnosis), new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Registration Diagnosis", basePatientData.getPersonAttribute(registrationDiagnosis),
+		    new HashMap<String, Object>());
 		
 		dataSetDefinition.addColumn("District", basePatientData.getDistrict(), new HashMap<String, Object>());
-		dataSetDefinition.addColumn("CareTaker1", basePatientData.getPersonAttribute(careTaker1), new HashMap<String, Object>());
-		dataSetDefinition.addColumn("CareTaker2", basePatientData.getPersonAttribute(careTaker2), new HashMap<String, Object>());
-		dataSetDefinition.addColumn("Phone Contact", basePatientData.getPersonAttribute(phoneContact), new HashMap<String, Object>());
+		dataSetDefinition.addColumn("CareTaker1", basePatientData.getPersonAttribute(careTaker1),
+		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("CareTaker2", basePatientData.getPersonAttribute(careTaker2),
+		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Phone Contact", basePatientData.getPersonAttribute(phoneContact),
+		    new HashMap<String, Object>());
 		
-		dataSetDefinition.addColumn("Appointment Site", df.getMostRecentObsByEndDate(nextVisitSite, dischargeEncounterType, df.getObsValueCodedConverter()), new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Appointment Site",
+		    df.getMostRecentObsByEndDate(nextVisitSite, dischargeEncounterType, df.getObsValueCodedConverter()),
+		    new HashMap<String, Object>());
 		
-		dataSetDefinition.addColumn("Appointment Date", basePatientData.getAppointmentDatesDuringPeriod(), new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Appointment Date", basePatientData.getAppointmentDatesDuringPeriod(),
+		    new HashMap<String, Object>());
 		
 		PatientDataDefinition daysSinceLastVisit = df.getDifferenceSinceLastObservation("lastFollowupDate", returnVisitDate);
 		daysSinceLastVisit.addParameter(new Parameter("endDate", "endDate", Date.class));
 		
-		dataSetDefinition.addColumn("Days since last Followup Date", daysSinceLastVisit, ParameterizableUtil.createParameterMappings("endDate=${endDate}"));
+		dataSetDefinition.addColumn("Days since last Followup Date", daysSinceLastVisit,
+		    ParameterizableUtil.createParameterMappings("endDate=${endDate}"));
 		
 		Map<String, Object> mappings = new HashMap<String, Object>();
 		mappings.put("endDate", "${endDate}");
