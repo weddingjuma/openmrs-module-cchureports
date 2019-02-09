@@ -129,30 +129,30 @@ public class GlobalPropertiesManagement {
 		return Integer.parseInt(globalProperty);
 	}
 	
-	//Identifiers
+	// Identifiers
 	public final static String IMB_IDENTIFIER = "reports.imbIdIdentifier";
 	
-	//Concepts
+	// Concepts
 	public final static String RETURN_VISIT_DATE = "concept.returnVisitDate";
 	
-	//Encounters
+	// Encounters
 	public final static String ADULT_FLOWSHEET_ENCOUNTER = "reports.adultflowsheetencounter";
 	
-	//RelationshipTypes
+	// RelationshipTypes
 	public final static String ACCOMPAGNATUER_RELATIONSHIP = "reports.accompagnatuerRelationship";
 	
 	public final static String MOTHER_RELATIONSHIP = "reports.pmtctMotherRelationship";
 	
-	//Forms
+	// Forms
 	public final static String CARDIOLOGY_CONSULT_FORM = "cardiologyreporting.cardilogyConsultationFormId";
 	
-	//Lab Panel Concepts 
+	// Lab Panel Concepts
 	public final static String CD4_PANEL_LAB_CONCEPT = "reports.cd4LabConcept";
 	
-	//Order types
+	// Order types
 	public final static String LAB_ORDER_TYPE = "reports.labOrderType";
 	
-	//Drug
+	// Drug
 	public final static String BACTRIM = "reports.BactrimDrug";
 	
 }

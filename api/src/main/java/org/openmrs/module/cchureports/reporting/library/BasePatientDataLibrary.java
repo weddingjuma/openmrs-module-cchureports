@@ -33,10 +33,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class BasePatientDataLibrary extends BaseDefinitionLibrary<PatientDataDefinition> {
 	
-	//@Autowired
+	// @Autowired
 	private DataFactory df = new DataFactory();
 	
-	//@Autowired
+	// @Autowired
 	private BuiltInPatientDataLibrary builtInPatientData = new BuiltInPatientDataLibrary();
 	
 	@Override
@@ -108,8 +108,7 @@ public class BasePatientDataLibrary extends BaseDefinitionLibrary<PatientDataDef
 	
 	@DocumentedDefinition("appointmentDatesDuringPeriod")
 	public PatientDataDefinition getAppointmentDatesDuringPeriod() {
-		return df.getObsWhoseValueDatetimeIsDuringPeriod(Context.getConceptService().getConcept(149),
-		    df.getObsValueDatetimeConverter());
+		return df.getObsWhoseValueDatetimeIsDuringPeriod(Context.getConceptService().getConcept(149), df.getObsValueDatetimeConverter());
 	}
 	
 	public PersonAttributeDataDefinition getPersonAttribute(PersonAttributeType personAttributeType) {

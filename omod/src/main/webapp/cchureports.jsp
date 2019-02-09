@@ -112,9 +112,9 @@ $(document).ready(function(){
 			href="${pageContext.request.contextPath}/module/cchureports/remove_SVReport.form"
 			onclick=msgrem(this)>Remove</a></td>
 	</tr>
-	
+
 	<tr>
-	    <td rowspan="3" class="tabletd">General Reports</td>
+		<td rowspan="4" class="tabletd">General Reports</td>
 		<td>Follow-up Report</td>
 		<td>Central</td>
 		<td><a
@@ -143,6 +143,17 @@ $(document).ready(function(){
 			onclick=msgreg(this)>(Re) register</a></td>
 		<td><a
 			href="${pageContext.request.contextPath}/module/cchureports/remove_surgicalProceduresReport.form"
+			onclick=msgrem(this)>Remove</a></td>
+	</tr>
+
+	<tr>
+		<td>IF Interim Report</td>
+		<td>Central</td>
+		<td><a
+			href="${pageContext.request.contextPath}/module/cchureports/register_ifInterimReport.form"
+			onclick=msgreg(this)>(Re) register</a></td>
+		<td><a
+			href="${pageContext.request.contextPath}/module/cchureports/remove_ifInterimReport.form"
 			onclick=msgrem(this)>Remove</a></td>
 	</tr>
 

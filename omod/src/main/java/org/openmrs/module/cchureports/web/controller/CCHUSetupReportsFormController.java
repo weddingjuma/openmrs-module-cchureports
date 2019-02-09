@@ -3,6 +3,7 @@ package org.openmrs.module.cchureports.web.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.cchureports.reporting.SetupFollowUpReport;
+import org.openmrs.module.cchureports.reporting.SetupIfInterimReport;
 import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
 import org.openmrs.module.cchureports.reporting.SetupORLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupPlasticSurgeryLogBookReport;
@@ -92,6 +93,18 @@ public class CCHUSetupReportsFormController {
 	@RequestMapping("/module/cchureports/remove_surgicalProceduresReport")
 	public ModelAndView removeSurgicalProceduresReport() throws Exception {
 		new SetupSurgicalProceduresIndicatorReport().delete();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/register_ifInterimReport")
+	public ModelAndView registerIfInterimReport() throws Exception {
+		new SetupIfInterimReport().setup();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/remove_ifInterimReport")
+	public ModelAndView removeIfInterimReport() throws Exception {
+		new SetupIfInterimReport().delete();
 		return new ModelAndView(new RedirectView("cchureports.form"));
 	}
 }

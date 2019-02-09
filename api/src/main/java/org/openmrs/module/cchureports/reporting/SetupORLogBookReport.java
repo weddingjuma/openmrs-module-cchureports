@@ -71,12 +71,14 @@ public class SetupORLogBookReport implements SetupReport {
 		dataSetDefinition.addParameter(new Parameter("startDate", "Start Date", Date.class));
 		dataSetDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
 		
-		//Add filters
-		/*dataSetDefinition.addRowFilter(
-		    Cohorts.createInProgramParameterizableByDate("In program", Context.getProgramWorkflowService().getProgram(1)),
-		    "onDate=${endDate}");*/
+		// Add filters
+		/*
+		 * dataSetDefinition.addRowFilter(
+		 * Cohorts.createInProgramParameterizableByDate("In program",
+		 * Context.getProgramWorkflowService().getProgram(1)), "onDate=${endDate}");
+		 */
 		
-		//Add Columns
+		// Add Columns
 		
 		Map<String, Object> mappings = new HashMap<String, Object>();
 		

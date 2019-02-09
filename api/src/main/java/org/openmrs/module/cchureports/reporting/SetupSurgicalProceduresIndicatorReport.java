@@ -332,7 +332,7 @@ public class SetupSurgicalProceduresIndicatorReport {
 		
 		setUpProperties();
 		
-		//Report set-up
+		// Report set-up
 		ReportDefinition reportDefinition = new ReportDefinition();
 		reportDefinition.setName("Surgical Procedures Indicator Report");
 		reportDefinition.addParameter(new Parameter("startDate", "Start Date", Date.class));

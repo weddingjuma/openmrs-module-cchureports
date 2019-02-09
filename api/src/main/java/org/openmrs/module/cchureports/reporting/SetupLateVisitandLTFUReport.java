@@ -34,10 +34,10 @@ import org.openmrs.module.reporting.report.service.ReportService;
 
 public class SetupLateVisitandLTFUReport {
 	
-	//@Autowired
+	// @Autowired
 	private BuiltInPatientDataLibrary builtInPatientData = new BuiltInPatientDataLibrary();
 	
-	//@Autowired
+	// @Autowired
 	private BasePatientDataLibrary basePatientData = new BasePatientDataLibrary();
 	
 	private DataFactory df = new DataFactory();
@@ -96,16 +96,18 @@ public class SetupLateVisitandLTFUReport {
 	
 	private void createDataSetDefinition(ReportDefinition reportDefinition) {
 		
-		//Create the only dataset for our report
+		// Create the only dataset for our report
 		PatientDataSetDefinition dataSetDefinition = new PatientDataSetDefinition();
 		dataSetDefinition.setName("dataSet");
 		dataSetDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
 		
-		//Add a filter to the dataset to only query patients whose last next followup date is before endDate parameter
+		// Add a filter to the dataset to only query patients whose last next followup
+		// date is before endDate parameter
 		CohortDefinition rowFilter = Cohorts.getPatientsWhoseObsValueDateIsBeforeEndDateAtLocation(returnVisitDate);
 		dataSetDefinition.addRowFilter(Mapped.mapStraightThrough(rowFilter));
 		
-		//Sort the dataset rows by the "Days since last followup Date" column -Descending
+		// Sort the dataset rows by the "Days since last followup Date" column
+		// -Descending
 		SortCriteria sortCriteria = new SortCriteria();
 		sortCriteria.addSortElement("Days since last Followup Date", SortDirection.DESC);
 		dataSetDefinition.setSortCriteria(sortCriteria);

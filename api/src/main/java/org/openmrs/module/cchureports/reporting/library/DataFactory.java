@@ -747,7 +747,7 @@ public class DataFactory {
 		return cd;
 	}
 	
-	//Obs queries
+	// Obs queries
 	
 	public ScriptedCompositionPatientDataDefinition getDifferenceSinceLastObservation(String name, Concept concept) {
 		

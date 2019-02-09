@@ -44,7 +44,7 @@ public class Helper {
 	public static void saveReportDefinition(ReportDefinition rd) {
 		ReportDefinitionService rds = (ReportDefinitionService) Context.getService(ReportDefinitionService.class);
 		
-		//try to find existing report definitions to replace
+		// try to find existing report definitions to replace
 		List<ReportDefinition> definitions = rds.getDefinitions(rd.getName(), true);
 		if (definitions.size() > 0) {
 			ReportDefinition existingDef = definitions.get(0);
@@ -55,14 +55,12 @@ public class Helper {
 			rds.saveDefinition(rd);
 		}
 		catch (Exception e) {
-			SerializedDefinitionService s = (SerializedDefinitionService) Context
-			        .getService(SerializedDefinitionService.class);
+			SerializedDefinitionService s = (SerializedDefinitionService) Context.getService(SerializedDefinitionService.class);
 			s.saveDefinition(rd);
 		}
 	}
 	
-	public static ReportDesign createRowPerPatientXlsOverviewReportDesign(ReportDefinition rd, String resourceName,
-	        String name, Map<? extends Object, ? extends Object> properties) throws IOException {
+	public static ReportDesign createRowPerPatientXlsOverviewReportDesign(ReportDefinition rd, String resourceName, String name, Map<? extends Object, ? extends Object> properties) throws IOException {
 		
 		ReportService rs = Context.getService(ReportService.class);
 		for (ReportDesign rdd : rs.getAllReportDesigns(false)) {

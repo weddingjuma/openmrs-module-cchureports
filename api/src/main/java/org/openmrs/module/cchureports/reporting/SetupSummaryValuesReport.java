@@ -22,8 +22,7 @@ public class SetupSummaryValuesReport implements SetupReport {
 		setUpProperties();
 		
 		ReportDefinition rd = createReportDefinition();
-		ReportDesign design = Helper.createRowPerPatientXlsOverviewReportDesign(rd, "SummaryValues.xls",
-		    "SummaryValues.xls_", null);
+		ReportDesign design = Helper.createRowPerPatientXlsOverviewReportDesign(rd, "SummaryValues.xls", "SummaryValues.xls_", null);
 		Properties props = new Properties();
 		props.put("repeatingSections", "sheet:1,dataset:Summary_Value Data Set");
 		props.put("sortWeight", "5000");
@@ -48,8 +47,7 @@ public class SetupSummaryValuesReport implements SetupReport {
 		rd.addParameter(new Parameter("endDate", "End Date", Date.class));
 		rd.addParameter(new Parameter("location", "Location", Location.class));
 		rd.setName("Summary Values Report");
-		rd.addDataSetDefinition(createBaseDataSet(),
-		    ParameterizableUtil.createParameterMappings("startDate=${startDate},endDate=${endDate},location=${location}"));
+		rd.addDataSetDefinition(createBaseDataSet(), ParameterizableUtil.createParameterMappings("startDate=${startDate},endDate=${endDate},location=${location}"));
 		Helper.saveReportDefinition(rd);
 		return rd;
 	}
@@ -69,8 +67,8 @@ public class SetupSummaryValuesReport implements SetupReport {
 		// Code here
 		
 		// cohort
-		//indicato
-		//add columns
+		// indicato
+		// add columns
 		
 	}
 	

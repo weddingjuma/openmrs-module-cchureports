@@ -32,10 +32,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class SetupFollowUpReport {
 	
-	//@Autowired
+	// @Autowired
 	private BuiltInPatientDataLibrary builtInPatientData = new BuiltInPatientDataLibrary();
 	
-	//@Autowired
+	// @Autowired
 	private BasePatientDataLibrary basePatientData = new BasePatientDataLibrary();
 	
 	private DataFactory df = new DataFactory();
@@ -60,8 +60,7 @@ public class SetupFollowUpReport {
 		
 		ReportDefinition rd = createReportDefinition();
 		
-		ReportDesign design = Helper.createRowPerPatientXlsOverviewReportDesign(rd, "followupreport.xls",
-		    "followupreport.xls_", null);
+		ReportDesign design = Helper.createRowPerPatientXlsOverviewReportDesign(rd, "followupreport.xls", "followupreport.xls_", null);
 		
 		Properties props = new Properties();
 		props.put("repeatingSections", "sheet:1,row:9,dataset:dataSet");
@@ -102,8 +101,7 @@ public class SetupFollowUpReport {
 		dataSetDefinition.addParameter(new Parameter("startDate", "Start Date", Date.class));
 		dataSetDefinition.addParameter(new Parameter("endDate", "End Date", Date.class));
 		
-		CohortDefinition rowFilter = Cohorts
-		        .getPatientsWhoseObsValueDateIsBetweenStartDateAndEndDateAtLocation(returnVisitDate);
+		CohortDefinition rowFilter = Cohorts.getPatientsWhoseObsValueDateIsBetweenStartDateAndEndDateAtLocation(returnVisitDate);
 		dataSetDefinition.addRowFilter(Mapped.mapStraightThrough(rowFilter));
 		
 		dataSetDefinition.addParameter(new Parameter("startDate", "Start Date", Date.class));
@@ -114,32 +112,22 @@ public class SetupFollowUpReport {
 		dataSetDefinition.addColumn("IP", i, (String) null);
 		
 		PreferredNameDataDefinition d = new PreferredNameDataDefinition();
-		dataSetDefinition.addColumn("givenName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class,
-		        "givenName"));
-		dataSetDefinition.addColumn("familyName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class,
-		        "familyName"));
+		dataSetDefinition.addColumn("givenName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class, "givenName"));
+		dataSetDefinition.addColumn("familyName", d, new HashMap<String, Object>(), new PropertyConverter(PersonName.class, "familyName"));
 		dataSetDefinition.addColumn("Current Age (yr)", basePatientData.getAgeAtEndInYears(), new HashMap<String, Object>());
-		dataSetDefinition.addColumn("Current Age (mth)", basePatientData.getAgeAtEndInMonths(),
-		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Current Age (mth)", basePatientData.getAgeAtEndInMonths(), new HashMap<String, Object>());
 		dataSetDefinition.addColumn("M/F", builtInPatientData.getGender(), new HashMap<String, Object>());
 		
-		dataSetDefinition.addColumn("Registration Diagnosis", basePatientData.getPersonAttribute(registrationDiagnosis),
-		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Registration Diagnosis", basePatientData.getPersonAttribute(registrationDiagnosis), new HashMap<String, Object>());
 		
 		dataSetDefinition.addColumn("District", basePatientData.getDistrict(), new HashMap<String, Object>());
-		dataSetDefinition.addColumn("CareTaker1", basePatientData.getPersonAttribute(careTaker1),
-		    new HashMap<String, Object>());
-		dataSetDefinition.addColumn("CareTaker2", basePatientData.getPersonAttribute(careTaker2),
-		    new HashMap<String, Object>());
-		dataSetDefinition.addColumn("Phone Contact", basePatientData.getPersonAttribute(phoneContact),
-		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("CareTaker1", basePatientData.getPersonAttribute(careTaker1), new HashMap<String, Object>());
+		dataSetDefinition.addColumn("CareTaker2", basePatientData.getPersonAttribute(careTaker2), new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Phone Contact", basePatientData.getPersonAttribute(phoneContact), new HashMap<String, Object>());
 		
-		dataSetDefinition.addColumn("Appointment Date", basePatientData.getAppointmentDatesDuringPeriod(),
-		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Appointment Date", basePatientData.getAppointmentDatesDuringPeriod(), new HashMap<String, Object>());
 		
-		dataSetDefinition.addColumn("Appointment Site",
-		    df.getMostRecentObsByEndDate(nextVisitSite, dischargeEncounterType, df.getObsValueCodedConverter()),
-		    new HashMap<String, Object>());
+		dataSetDefinition.addColumn("Appointment Site", df.getMostRecentObsByEndDate(nextVisitSite, dischargeEncounterType, df.getObsValueCodedConverter()), new HashMap<String, Object>());
 		
 		Map<String, Object> mappings = new HashMap<String, Object>();
 		mappings.put("startDate", "${startDate}");
