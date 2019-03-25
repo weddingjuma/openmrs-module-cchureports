@@ -14,16 +14,21 @@
 package org.openmrs.module.cchureports.reporting.library;
 
 import org.openmrs.PersonAttributeType;
+import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reporting.common.Birthdate;
 import org.openmrs.module.reporting.data.converter.AgeConverter;
 import org.openmrs.module.reporting.data.converter.ConcatenatedPropertyConverter;
+import org.openmrs.module.reporting.data.converter.DataConverter;
 import org.openmrs.module.reporting.data.converter.PropertyConverter;
+import org.openmrs.module.reporting.data.patient.definition.ConvertedPatientDataDefinition;
 import org.openmrs.module.reporting.data.patient.definition.EncountersForPatientDataDefinition;
 import org.openmrs.module.reporting.data.patient.definition.PatientDataDefinition;
+import org.openmrs.module.reporting.data.patient.definition.PersonToPatientDataDefinition;
 import org.openmrs.module.reporting.data.patient.library.BuiltInPatientDataLibrary;
 import org.openmrs.module.reporting.data.person.definition.BirthdateDataDefinition;
 import org.openmrs.module.reporting.data.person.definition.PersonAttributeDataDefinition;
+import org.openmrs.module.reporting.data.person.definition.PersonDataDefinition;
 import org.openmrs.module.reporting.data.person.definition.PreferredAddressDataDefinition;
 import org.openmrs.module.reporting.data.person.definition.PreferredNameDataDefinition;
 import org.openmrs.module.reporting.definition.library.BaseDefinitionLibrary;
@@ -91,10 +96,24 @@ public class BasePatientDataLibrary extends BaseDefinitionLibrary<PatientDataDef
 		return df.convert(ageAtEnd, new AgeConverter(AgeConverter.MONTHS));
 	}
 	
-	@DocumentedDefinition("preferredFamilyNames")
-	public PatientDataDefinition getPreferredFamilyNames() {
-		PreferredNameDataDefinition pdd = new PreferredNameDataDefinition();
-		return df.convert(pdd, new ConcatenatedPropertyConverter(" ", "familyName", "familyName2"));
+	@DocumentedDefinition("preferredName.familyName")
+	public PatientDataDefinition getPreferredFamilyName() {
+		return getPreferredName("familyName");
+	}
+	
+	@DocumentedDefinition("preferredName.familyName2")
+	public PatientDataDefinition getPreferredFamilyName2() {
+		return getPreferredName("familyName2");
+	}
+	
+	@DocumentedDefinition("preferredName.givenName")
+	public PatientDataDefinition getPreferredGivenName() {
+		return getPreferredName("givenName");
+	}
+	
+	@DocumentedDefinition("preferredName.middleName")
+	public PatientDataDefinition getPreferredMiddleName() {
+		return getPreferredName("middleName");
 	}
 	
 	// Encounters
@@ -117,4 +136,15 @@ public class BasePatientDataLibrary extends BaseDefinitionLibrary<PatientDataDef
 		return d;
 	}
 	
+	protected PatientDataDefinition getPreferredName(String property) {
+		return convert(new PreferredNameDataDefinition(), new PropertyConverter(PersonName.class, property));
+	}
+	
+	protected PatientDataDefinition convert(PatientDataDefinition pdd, DataConverter... converters) {
+		return new ConvertedPatientDataDefinition(pdd, converters);
+	}
+	
+	protected PatientDataDefinition convert(PersonDataDefinition pdd, DataConverter... converters) {
+		return new ConvertedPatientDataDefinition(new PersonToPatientDataDefinition(pdd), converters);
+	}
 }

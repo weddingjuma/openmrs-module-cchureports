@@ -16,6 +16,7 @@ package org.openmrs.module.cchureports.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.cchureports.reporting.SetupAccomplishmentsReport;
 import org.openmrs.module.cchureports.reporting.SetupIfInterimReport;
 import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
 import org.openmrs.module.cchureports.reporting.SetupORLogBookReport;
@@ -69,6 +70,7 @@ public class CleanReportingTablesAndRegisterAllReports {
 		new SetupLateVisitandLTFUReport().setup();
 		new SetupSurgicalProceduresIndicatorReport().setup();
 		new SetupIfInterimReport().setup();
+		new SetupAccomplishmentsReport().setup();
 	}
 	
 }

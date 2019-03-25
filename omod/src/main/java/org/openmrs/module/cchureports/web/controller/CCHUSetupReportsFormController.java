@@ -2,6 +2,7 @@ package org.openmrs.module.cchureports.web.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.cchureports.reporting.SetupAccomplishmentsReport;
 import org.openmrs.module.cchureports.reporting.SetupFollowUpReport;
 import org.openmrs.module.cchureports.reporting.SetupIfInterimReport;
 import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
@@ -22,6 +23,18 @@ public class CCHUSetupReportsFormController {
 	
 	@RequestMapping(value = "/module/cchureports/cchureports", method = RequestMethod.GET)
 	public void manage() {
+	}
+	
+	@RequestMapping("/module/cchureports/register_accomplishmentsReport")
+	public ModelAndView registerAccomplishmentsReport() throws Exception {
+		new SetupAccomplishmentsReport().setup();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/remove_accomplishmentsReport")
+	public ModelAndView removeAccomplishmentsReport() throws Exception {
+		new SetupAccomplishmentsReport().delete();
+		return new ModelAndView(new RedirectView("cchureports.form"));
 	}
 	
 	@RequestMapping("/module/cchureports/register_ORLogBook")

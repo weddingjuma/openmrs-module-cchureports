@@ -81,8 +81,19 @@ $(document).ready(function(){
 		<td>Run</td>
 		<td colspan="2"><center>Action</center></td>
 	</tr>
+		<tr>
+		<td rowspan="3" class="tabletd">General Reports</td>
+		<td>Surgeon's Cases Report</td>
+		<td>Central</td>
+		<td><a
+			href="${pageContext.request.contextPath}/module/cchureports/register_accomplishmentsReport.form"
+			onclick=msgreg(this)>(Re) register</a></td>
+		<td><a
+			href="${pageContext.request.contextPath}/module/cchureports/remove_accomplishmentsReport.form"
+			onclick=msgrem(this)>Remove</a></td>
+	</tr>
 	<tr>
-		<td rowspan="3" class="tabletd">Log Book Reports</td>
+		<td rowspan="2" class="tabletd">Log Book Reports</td>
 		<td>OR Log Book Report</td>
 		<td>Central</td>
 		<td><a

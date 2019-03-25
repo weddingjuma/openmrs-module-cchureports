@@ -14,6 +14,7 @@ import org.openmrs.module.reporting.report.definition.ReportDefinition;
 import org.openmrs.module.reporting.report.definition.service.ReportDefinitionService;
 import org.openmrs.module.reporting.report.renderer.CsvReportRenderer;
 import org.openmrs.module.reporting.report.renderer.ExcelTemplateRenderer;
+import org.openmrs.module.reporting.report.renderer.XlsReportRenderer;
 import org.openmrs.module.reporting.report.service.ReportService;
 import org.openmrs.util.OpenmrsClassLoader;
 
@@ -84,6 +85,19 @@ public class Helper {
 		}
 		resource.setReportDesign(design);
 		
+		return design;
+	}
+	
+	/**
+	 * @return a new ReportDesign for a standard Excel output
+	 */
+	public static ReportDesign createExcelDesign(ReportDefinition reportDefinition, String reportDesignName, boolean includeParameters) {
+		ReportDesign design = new ReportDesign();
+		design.setName(reportDesignName);
+		design.setReportDefinition(reportDefinition);
+		design.setRendererType(XlsReportRenderer.class);
+		if (includeParameters)
+			design.addPropertyValue(XlsReportRenderer.INCLUDE_DATASET_NAME_AND_PARAMETERS_PROPERTY, "true");
 		return design;
 	}
 	
