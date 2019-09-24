@@ -39,7 +39,9 @@ public class Cohorts {
 	}
 	
 	public static SqlCohortDefinition newPatientsNotVoided() {
-		SqlCohortDefinition newPatientsNotVoided = new SqlCohortDefinition("select distinct p.patient_id from patient p where p.voided=0 and p.date_created >= :startdDate and p.date_created <= :endDate");
+		SqlCohortDefinition newPatientsNotVoided = new SqlCohortDefinition("select distinct p.patient_id from patient p where p.voided=0 and p.date_created >= :startDate and p.date_created <= :endDate");
+		newPatientsNotVoided.addParameter(new Parameter("startDate", "startDate", Date.class));
+		newPatientsNotVoided.addParameter(new Parameter("endDate", "endDate", Date.class));
 		return newPatientsNotVoided;
 	}
 	
