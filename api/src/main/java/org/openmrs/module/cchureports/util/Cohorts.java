@@ -38,6 +38,11 @@ public class Cohorts {
 		return patientsNotVoided;
 	}
 	
+	public static SqlCohortDefinition newPatientsNotVoided() {
+		SqlCohortDefinition newPatientsNotVoided = new SqlCohortDefinition("select distinct p.patient_id from patient p where p.voided=0 and p.date_created >= :startdDate and p.date_created <= :endDate");
+		return newPatientsNotVoided;
+	}
+	
 	public static AgeCohortDefinition createXtoYAgeCohort(String name, int minAge, int maxAge) {
 		AgeCohortDefinition xToYCohort = new AgeCohortDefinition();
 		xToYCohort.setName(name);

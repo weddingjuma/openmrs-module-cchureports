@@ -6,6 +6,7 @@ import org.openmrs.module.cchureports.reporting.SetupAccomplishmentsReport;
 import org.openmrs.module.cchureports.reporting.SetupFollowUpReport;
 import org.openmrs.module.cchureports.reporting.SetupIfInterimReport;
 import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
+import org.openmrs.module.cchureports.reporting.SetupNewRegistrationsReport;
 import org.openmrs.module.cchureports.reporting.SetupORLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupPlasticSurgeryLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupSummaryValuesReport;
@@ -82,6 +83,18 @@ public class CCHUSetupReportsFormController {
 	@RequestMapping("/module/cchureports/remove_followupsReport")
 	public ModelAndView removefollowupsReport() throws Exception {
 		new SetupFollowUpReport().delete();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/register_newRegistrationsReport")
+	public ModelAndView registerNewRegistrationsReport() throws Exception {
+		new SetupNewRegistrationsReport().setup();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/remove_newRegistrationsReport")
+	public ModelAndView removeNewRegistrationsReport() throws Exception {
+		new SetupNewRegistrationsReport().delete();
 		return new ModelAndView(new RedirectView("cchureports.form"));
 	}
 	

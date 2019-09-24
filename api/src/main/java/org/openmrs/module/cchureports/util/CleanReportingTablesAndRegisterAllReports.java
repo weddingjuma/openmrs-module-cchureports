@@ -19,6 +19,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.cchureports.reporting.SetupAccomplishmentsReport;
 import org.openmrs.module.cchureports.reporting.SetupIfInterimReport;
 import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
+import org.openmrs.module.cchureports.reporting.SetupNewRegistrationsReport;
 import org.openmrs.module.cchureports.reporting.SetupORLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupPlasticSurgeryLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupSummaryValuesReport;
@@ -71,6 +72,7 @@ public class CleanReportingTablesAndRegisterAllReports {
 		new SetupSurgicalProceduresIndicatorReport().setup();
 		new SetupIfInterimReport().setup();
 		new SetupAccomplishmentsReport().setup();
+		new SetupNewRegistrationsReport().setup();
 	}
 	
 }
