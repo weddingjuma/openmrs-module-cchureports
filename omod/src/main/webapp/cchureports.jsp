@@ -125,7 +125,7 @@ $(document).ready(function(){
 	</tr>
 
 	<tr>
-		<td rowspan="5" class="tabletd">General Reports</td>
+		<td rowspan="6" class="tabletd">General Reports</td>
 		<td>Follow-up Report</td>
 		<td>Central</td>
 		<td><a
@@ -136,6 +136,16 @@ $(document).ready(function(){
 			onclick=msgrem(this)>Remove</a></td>
 	</tr>
 		<tr>
+		<td>Registration Diagnosis Report</td>
+		<td>Central</td>
+		<td><a
+			href="${pageContext.request.contextPath}/module/cchureports/register_registrationDiagnosisReport.form"
+			onclick=msgreg(this)>(Re) register</a></td>
+		<td><a
+			href="${pageContext.request.contextPath}/module/cchureports/remove_registrationDiagnosisReport.form"
+			onclick=msgrem(this)>Remove</a></td>
+	</tr>
+	<tr>
 		<td>New Registrations Report</td>
 		<td>Central</td>
 		<td><a

@@ -9,6 +9,7 @@ import org.openmrs.module.cchureports.reporting.SetupLateVisitandLTFUReport;
 import org.openmrs.module.cchureports.reporting.SetupNewRegistrationsReport;
 import org.openmrs.module.cchureports.reporting.SetupORLogBookReport;
 import org.openmrs.module.cchureports.reporting.SetupPlasticSurgeryLogBookReport;
+import org.openmrs.module.cchureports.reporting.SetupRegistrationDiagnosisReport;
 import org.openmrs.module.cchureports.reporting.SetupSummaryValuesReport;
 import org.openmrs.module.cchureports.reporting.SetupSurgicalProceduresIndicatorReport;
 import org.springframework.stereotype.Controller;
@@ -83,6 +84,18 @@ public class CCHUSetupReportsFormController {
 	@RequestMapping("/module/cchureports/remove_followupsReport")
 	public ModelAndView removefollowupsReport() throws Exception {
 		new SetupFollowUpReport().delete();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/register_registrationDiagnosisReport")
+	public ModelAndView registerRegistrationDiagnosisReport() throws Exception {
+		new SetupRegistrationDiagnosisReport().setup();
+		return new ModelAndView(new RedirectView("cchureports.form"));
+	}
+	
+	@RequestMapping("/module/cchureports/remove_registrationDiagnosisReport")
+	public ModelAndView removeRegistrationDiagnosisReport() throws Exception {
+		new SetupRegistrationDiagnosisReport().delete();
 		return new ModelAndView(new RedirectView("cchureports.form"));
 	}
 	
